@@ -15,7 +15,7 @@ function auth($login, $passwd, $users) {
 session_start();
 
 //$mysqli = new mysqli("e2r12p6:3306", "samy", "tititi", "DB");
-$mysqli = new mysqli("localhost:3306", "root", "tototo", "DB");
+$mysqli = new mysqli("localhost", "root", "popopo", "DB");
 $query = "select login, passwd, permission from users";
 if (($users = $mysqli->query($query)) === false) {
 	        echo "error retrieving Users: " . $mysqli->error."\n";
