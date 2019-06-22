@@ -1,2 +1,11 @@
-<?PHP   require_once("header/header.php"); 
-        require_once("header/footer.php"); ?>
+<?php 
+require_once("header/layout.php"); 
+layout("Camagruuuuuu");
+?>
+
+
+
+
+
+</body>
+</html>
