@@ -1,5 +1,8 @@
 <?php
-$DB_dsn = 'mysql:host=localhost:3307';
+$DB_dsn = 'mysql:host=localhost:3306';
 $DB_user = 'root';
-$DB_password = 'popopo';
+$DB_password = 'test';
+
+  $DB_connect = new PDO($DB_dsn, $DB_user, $DB_password);
+
 ?>
