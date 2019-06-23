@@ -3,7 +3,7 @@
 	// width to the value defined here, but the height will be
 	// calculated based on the aspect ratio of the input stream.
 
-	var width = 320;    // We will scale the photo width to this
+	var width = 700;    // We will scale the photo width to this
 	var height = 0;     // This will be computed based on the input stream
 
 	// |streaming| indicates whether or not we're currently streaming
@@ -16,13 +16,11 @@
 
 	var video = null;
 	var canvas = null;
-	var photo = null;
 	var startbutton = null;
 
 	function startup() {
 		video = document.getElementById('video');
 		canvas = document.getElementById('canvas');
-		photo = document.getElementById('photo');
 		startbutton = document.getElementById('startbutton');
 
 		navigator.mediaDevices.getUserMedia({video: true, audio: false})
@@ -36,18 +34,18 @@
 
 		video.addEventListener('canplay', function(ev){
 			if (!streaming) {
-				height = video.videoHeight / (video.videoWidth/width);
+				height = video.videoHeight;
 
 				// Firefox currently has a bug where the height can't be read from
 				// the video, so we will make assumptions if this happens.
 
 				if (isNaN(height)) {
-					height = width / (4/3);
+					height = video.videoWidth / (4/3);
 				}
 
-				video.setAttribute('width', width);
-				video.setAttribute('height', height);
-				canvas.setAttribute('width', width);
+				//video.setAttribute('width', video.videoWidth);
+				//video.setAttribute('height', height);
+				canvas.setAttribute('width', video.videoWidth);
 				canvas.setAttribute('height', height);
 				streaming = true;
 			}
@@ -70,7 +68,6 @@
 		context.fillRect(0, 0, canvas.width, canvas.height);
 
 		var data = canvas.toDataURL('image/png', 0.7);
-		photo.setAttribute('src', data);
 	}
 
 	// Capture a photo by fetching the current contents of the video
@@ -79,40 +76,47 @@
 	// drawing that to the screen, we can change its size and/or apply
 	// other changes before drawing it.
 
-
 	function send_photo_to_server(data) {
 		const req = new XMLHttpRequest();
-		req.open('POST', './galerie/handle_picture.php', true);
-
+		req.open('POST', './galerie/php/handle_picture.php', true);
 		req.overrideMimeType("text/plain;");
 		req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		req.onreadystatechange = function(event) {
 			if (this.readyState === XMLHttpRequest.DONE) {
 				if (this.status === 200) {
 					console.log(this);
-				} else {
-					console.log("Status de la réponse: %d (%s)", this.status, this.statusText);
-				}
+				} 
 			}
 		};
 		req.send("data=" + data);
 	}
-let url = "";
+
+	function get_all_photo() {
+		const req = new XMLHttpRequest();
+		req.open('GET', './galerie/php/get_photo.php', true);
+		req.onreadystatechange = function(event) {
+			if (this.readyState === XMLHttpRequest.DONE) {
+				if (this.status === 200) {
+					console.log(this);
+				} 
+			}
+		};
+		req.send();
+	}
+
 	function takepicture() {
 		var context = canvas.getContext('2d');
-		if (width && height) {
-			canvas.width = width;
+		if (video && video.videoWidth && height) {
+			canvas.width = video.videoWidth;
 			canvas.height = height;
-			context.drawImage(video, 0, 0, width, height);
-			var data = canvas.toDataURL('image/jpeg', 0.7);
+			context.drawImage(video, 0, 0, video.videoWidth, height);
+			var data = canvas.toDataURL('image/jpeg', 1);
 			data = data.replace(/\+/g, '%2B');
 			send_photo_to_server(data);
-			photo.setAttribute('src', data);
 		} else {
 			clearphoto();
 		}
 	}
-
 	// Set up our event listener to run the startup process
 	// once loading is complete.
 	window.addEventListener('load', startup, false);
