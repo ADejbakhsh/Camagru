@@ -1,9 +1,11 @@
 <?php
-session_start();
+require_once($_SERVER['DOCUMENT_ROOT'].'/galerie/php/utils_photo.php');
 $data = $_POST['data'];
+$filtre = $_POST['nb_filtre'];
+
+
 if (preg_match('/^data:image\/(\w+);base64,/', $data, $type)) {
 	$data = substr($data, strpos($data, ',') + 1);
-	echo $data;
 	$type = strtolower($type[1]); // jpg, png, gif
 	if (!in_array($type, [ 'jpg', 'jpeg', 'gif', 'png' ])) {
 		echo 'invalid image type';
@@ -15,7 +17,7 @@ if (preg_match('/^data:image\/(\w+);base64,/', $data, $type)) {
 } else {
 	echo 'did not match data URI with image data';
 }
-file_put_contents("img.{$type}", $data);
 
-imagecreatefromjpeg("img.{$type}");
+file_put_contents(path('/galerie/photo/').find_the_right_name().".{$type}", $data);
+
 ?>
