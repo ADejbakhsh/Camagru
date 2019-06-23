@@ -1,10 +1,9 @@
-
 (function() {
 	//The width and height of the captured photo. We will set the
-		// width to the value defined here, but the height will be
-		// calculated based on the aspect ratio of the input stream.
+	// width to the value defined here, but the height will be
+	// calculated based on the aspect ratio of the input stream.
 
-		var width = 320;    // We will scale the photo width to this
+	var width = 320;    // We will scale the photo width to this
 	var height = 0;     // This will be computed based on the input stream
 
 	// |streaming| indicates whether or not we're currently streaming
@@ -70,7 +69,7 @@
 		context.fillStyle = "#AAA";
 		context.fillRect(0, 0, canvas.width, canvas.height);
 
-		var data = canvas.toDataURL('image/png');
+		var data = canvas.toDataURL('image/png', 0.7);
 		photo.setAttribute('src', data);
 	}
 
@@ -80,15 +79,34 @@
 	// drawing that to the screen, we can change its size and/or apply
 	// other changes before drawing it.
 
+
+	function send_photo_to_server(data) {
+		const req = new XMLHttpRequest();
+		req.open('POST', './galerie/handle_picture.php', true);
+
+		req.overrideMimeType("text/plain;");
+		req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		req.onreadystatechange = function(event) {
+			if (this.readyState === XMLHttpRequest.DONE) {
+				if (this.status === 200) {
+					console.log(this);
+				} else {
+					console.log("Status de la réponse: %d (%s)", this.status, this.statusText);
+				}
+			}
+		};
+		req.send("data=" + data);
+	}
+let url = "";
 	function takepicture() {
 		var context = canvas.getContext('2d');
 		if (width && height) {
 			canvas.width = width;
 			canvas.height = height;
 			context.drawImage(video, 0, 0, width, height);
-
-			var data = canvas.toDataURL('image/png');
-			console.log(data);
+			var data = canvas.toDataURL('image/jpeg', 0.7);
+			data = data.replace(/\+/g, '%2B');
+			send_photo_to_server(data);
 			photo.setAttribute('src', data);
 		} else {
 			clearphoto();

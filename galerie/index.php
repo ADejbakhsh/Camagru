@@ -3,8 +3,6 @@ session_start();
 require_once('../header/layout.php');
 layout("my gallerie");
 ?>
-
-
 		<video id="video"></video>
 		<button id="startbutton">Prendre une photo</button>
 		<canvas id="canvas"></canvas>
