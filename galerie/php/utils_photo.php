@@ -18,7 +18,8 @@ function get_all_photo() {
 	$data = scandir($dir_photo);
 	unset($data[0]);
 	unset($data[1]);
-	return $data;
+	natcasesort($data);
+	return array_values($data);
 }
 
 

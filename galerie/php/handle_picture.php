@@ -17,7 +17,7 @@ if (preg_match('/^data:image\/(\w+);base64,/', $data, $type)) {
 } else {
 	echo 'did not match data URI with image data';
 }
-
-file_put_contents(path('/galerie/photo/').find_the_right_name().".{$type}", $data);
-
+$name = find_the_right_name().".{$type}";
+file_put_contents(path('/galerie/photo/').$name, $data);
+echo $name;
 ?>

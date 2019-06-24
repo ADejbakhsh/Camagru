@@ -56,6 +56,7 @@
 			ev.preventDefault();
 		}, false);
 
+		get_all_photo();
 		clearphoto();
 	}
 
@@ -84,11 +85,34 @@
 		req.onreadystatechange = function(event) {
 			if (this.readyState === XMLHttpRequest.DONE) {
 				if (this.status === 200) {
-					console.log(this);
+					add_photo(null, this.response);
 				} 
 			}
 		};
 		req.send("data=" + data);
+	}
+
+
+	function construct_photo(name) {
+		let	href = "galerie/photo/" + name;
+		return "<a class='side_photo' href='" + href + "'><img src='" + href + "'/></a>";
+	}
+
+	function add_photo(sidebar, img) {
+		sidebar = sidebar || document.getElementById('sidebar');
+		sidebar.innerHTML = construct_photo(img) + sidebar.innerHTML;
+	}
+
+	function display_photo(object) {
+		const sidebar = document.getElementById('sidebar');
+		for (img of object) {
+			add_photo(sidebar, img);
+		}
+	}
+
+	function display_filter() {
+
+
 	}
 
 	function get_all_photo() {
@@ -97,7 +121,20 @@
 		req.onreadystatechange = function(event) {
 			if (this.readyState === XMLHttpRequest.DONE) {
 				if (this.status === 200) {
-					console.log(this);
+					display_photo(JSON.parse(this.response));
+				} 
+			}
+		};
+		req.send();
+	}
+
+	function get_filter() {
+		const req = new XMLHttpRequest();
+		req.open('GET', './galerie/php/get_filter.php', true);
+		req.onreadystatechange = function(event) {
+			if (this.readyState === XMLHttpRequest.DONE) {
+				if (this.status === 200) {
+					display_filter(JSON.parse(this.response));
 				} 
 			}
 		};

@@ -8,10 +8,12 @@ layout("my gallerie");
 
 	<div id="main">	
 		<div class="video">	
-			<button id="startbutton">Prendre une photo</button>
 			<video id="video"></video>
 		</div>	
-	<canvas style="display: none" id="canvas"></canvas>
+		<div id='sidebar'>
+		</div>
+		<button id="startbutton">Prendre une photo</button>
+		<canvas style="display: none" id="canvas"></canvas>
 	</div>
 		<script charset="utf-8" src="galerie/galerie.js"></script>	
 	</body>
