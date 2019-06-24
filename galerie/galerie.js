@@ -22,7 +22,6 @@
 		video = document.getElementById('video');
 		canvas = document.getElementById('canvas');
 		startbutton = document.getElementById('startbutton');
-
 		navigator.mediaDevices.getUserMedia({video: true, audio: false})
 			.then(function(stream) {
 				video.srcObject = stream;
@@ -31,20 +30,14 @@
 		.catch(function(err) {
 			console.log("An error occurred: " + err);
 		});
-
 		video.addEventListener('canplay', function(ev){
 			if (!streaming) {
 				height = video.videoHeight;
-
-				// Firefox currently has a bug where the height can't be read from
-				// the video, so we will make assumptions if this happens.
 
 				if (isNaN(height)) {
 					height = video.videoWidth / (4/3);
 				}
 
-				//video.setAttribute('width', video.videoWidth);
-				//video.setAttribute('height', height);
 				canvas.setAttribute('width', video.videoWidth);
 				canvas.setAttribute('height', height);
 				streaming = true;
@@ -57,11 +50,9 @@
 		}, false);
 
 		get_all_photo();
+		get_filter();
 		clearphoto();
 	}
-
-	// Fill the photo with an indication that none has been
-	// captured.
 
 	function clearphoto() {
 		var context = canvas.getContext('2d');
@@ -71,14 +62,10 @@
 		var data = canvas.toDataURL('image/png', 0.7);
 	}
 
-	// Capture a photo by fetching the current contents of the video
-	// and drawing it into a canvas, then converting that to a PNG
-	// format data URL. By drawing it on an offscreen canvas and then
-	// drawing that to the screen, we can change its size and/or apply
-	// other changes before drawing it.
-
 	function send_photo_to_server(data) {
+		const filter = document.querySelector('#active_filter');
 		const req = new XMLHttpRequest();
+		let string = null;
 		req.open('POST', './galerie/php/handle_picture.php', true);
 		req.overrideMimeType("text/plain;");
 		req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -89,7 +76,11 @@
 				} 
 			}
 		};
-		req.send("data=" + data);
+		string = "data=" + data;
+
+		if (filter.src.match(/\.png$/))
+			string += "&filter=" + filter.src;
+		req.send(string);
 	}
 
 
@@ -110,9 +101,29 @@
 		}
 	}
 
-	function display_filter() {
+	function change_filter() {
+		const filter = document.querySelector('#active_filter');
+		const video = document.getElementById('video');
+		filter.src = this.childNodes[0].src;
+		filter.style.width = "100%";
+		if (filter.width >= video.offsetWidth )
+			filter.style.width = video.offsetWidth + "px";
+		if (filter.height >= video.offsetHeight)
+			filter.style.width = video.offsetHeight + "px";
+	}
 
-
+	function display_filter(object) {
+		const filters = document.getElementById('filter');
+		for (name of object) {
+			let link = document.createElement('a');
+			let img = document.createElement('img');
+			img.src = 'galerie/filter/' + name;
+			link.href = '#';
+			link.classList.add('filter');
+			link.addEventListener('click', change_filter);
+			link.prepend(img);
+			filters.prepend(link);
+		}
 	}
 
 	function get_all_photo() {
@@ -135,7 +146,7 @@
 			if (this.readyState === XMLHttpRequest.DONE) {
 				if (this.status === 200) {
 					display_filter(JSON.parse(this.response));
-				} 
+				}
 			}
 		};
 		req.send();
@@ -154,7 +165,5 @@
 			clearphoto();
 		}
 	}
-	// Set up our event listener to run the startup process
-	// once loading is complete.
 	window.addEventListener('load', startup, false);
 })();
