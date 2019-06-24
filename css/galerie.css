@@ -25,7 +25,7 @@ html, body {
 
 #main .video { 
 	display: flex;
-	justify-content: flex-end;
+	justify-content: center;
 	align-items: flex-end;
 	width: 100%;
 	grid-area: 1 / 2 / 5 / 5; 
@@ -43,4 +43,33 @@ img {
 	width: 100%;
 }
 
-#main #filters { grid-area: 1 / 1 / 5 / 2; }
+#main #filter { 
+grid-area: 1 / 1 / 5 / 2; 
+overflow-y: auto;
+overflow-x: hidden;
+}
+
+img#active_filter{
+	position: absolute;
+
+}
+
+a.filter img {
+	padding-bottom: 5px;
+	border: solid grey 2px;
+}
+
+a.filter:focus img {
+	border: solid red 3px;
+}
+
+a.filter:hover img {
+	border: solid black 3px;
+}
+
+a.filter:active img {
+	border: solid cyan 3px;
+}
+
+
+

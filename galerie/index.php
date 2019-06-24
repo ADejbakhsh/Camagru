@@ -6,10 +6,13 @@ layout("my gallerie");
 
  <link rel="stylesheet" type="text/css" href="css/galerie.css" />
 
-	<div id="main">	
-		<div class="video">	
+	<div id="main">
+		<div class="video">
+			<img id="active_filter" src="" />
 			<video id="video"></video>
 		</div>	
+		<div id='filter'>
+		</div>
 		<div id='sidebar'>
 		</div>
 		<button id="startbutton">Prendre une photo</button>
