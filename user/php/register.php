@@ -1,22 +1,22 @@
 <?php
-require_once($_SERVER["DOCUMENT_ROOT"]."/src/utils.php");
-require (path("/config/db_utils.php"));
-require (path('/config/database.php'));
+require ("./login_utils.php");
+user_connect("michel","user_connect");
 
-fetch_username("michel");
-
-
-/*
-if (isset($_POST['submit']) && $_POST['submit'] ===
-  "Register")
+if (isset($_POST['submit']) && $_POST['submit'] === "Register")
 {
-  $query = "SELECT login FROM Users";
-  if (($users = $mysqli->query($query)) ===
-    FALSE) {
-    echo ("Error trying to retrieve Users
-      Table : " . $mysqli->error."\n");
-    exit ();
+  $error = error_register($_POST['login'], $_POST['email'], $_POST['pass'], $_POST['pass_bis']);
+  if (isset ($error['0']))
+  {
+    echo "error";
+    die();
+    #print all error
   }
+  else
+  {
+    user_creation($_POST['login'], $_POST['email'], $_POST['pass']);
+  }
+}
+  /*
   $login
     = mysqli_real_escape_string($mysqli,
       $_POST['login']);

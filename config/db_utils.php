@@ -4,18 +4,11 @@ ini_set('display_errors', 1);
 
 require ('database.php');
 
-function fetch_user($id) {
-}
-
-var_dump($DB_connect);
-
-function fetch_username($user_login) {
-
+function fetch_bool($collum, $name) {
   global $DB_connect;
-  $statement =  $DB_connect->prepare("SELECT login FROM db.user WHERE login = :user_login;");
-
-  $statement->execute(['user_login' => $user_login]);
-  var_dump($statement->fetch());
+  $statement =  $DB_connect->prepare("SELECT ".$collum." FROM db.user WHERE login = :name;");
+  $statement->execute(['name' => $name]);
+  return (($statement->rowCount() > 0)? true : false);
 }
 
 ?>
