@@ -30,14 +30,15 @@
 		.catch(function(err) {
 			console.log("An error occurred: " + err);
 		});
+
 		video.addEventListener('canplay', function(ev){
 			if (!streaming) {
 				height = video.videoHeight;
+				destroy_upload_button();
 
 				if (isNaN(height)) {
 					height = video.videoWidth / (4/3);
 				}
-
 				canvas.setAttribute('width', video.videoWidth);
 				canvas.setAttribute('height', height);
 				streaming = true;
@@ -49,9 +50,22 @@
 			ev.preventDefault();
 		}, false);
 
+
+		create_button_upload();
 		get_all_photo();
 		get_filter();
 		clearphoto();
+	}
+
+	function create_button_upload() {
+		let div = document.querySelector('div#upload');
+		div.innerHTML += '<form action="/upload_photo.php"><input type="file" name="picture" accept="image/*"><input type="submit"></form>';
+	}
+
+	function destroy_upload_button() {
+		let div = document.querySelector('div#upload');
+		div.innerHTML= "";
+		div.parentNode.removeChild(div);
 	}
 
 	function clearphoto() {
@@ -77,8 +91,9 @@
 			}
 		};
 		string = "data=" + data;
-
-		if (filter.src.match(/\.png$/))
+		if (!check_if_there_is_filter())
+			return ;
+		else
 			string += "&filter=" + filter.src;
 		req.send(string);
 	}
@@ -139,6 +154,14 @@
 		req.send();
 	}
 
+	function check_if_there_is_filter() {
+		const filter = document.querySelector('#active_filter');
+		if (filter.src.match(/\.png$/))
+			return (true);
+		else
+			return (false);
+	}
+
 	function get_filter() {
 		const req = new XMLHttpRequest();
 		req.open('GET', './galerie/php/get_filter.php', true);
@@ -153,6 +176,8 @@
 	}
 
 	function takepicture() {
+		if (!check_if_there_is_filter())
+			return ;
 		var context = canvas.getContext('2d');
 		if (video && video.videoWidth && height) {
 			canvas.width = video.videoWidth;

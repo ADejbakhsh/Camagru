@@ -44,9 +44,14 @@ img {
 }
 
 #main #filter { 
-grid-area: 1 / 1 / 5 / 2; 
+grid-area: 1 / 1 / 4 / 2; 
 overflow-y: auto;
 overflow-x: hidden;
+}
+
+#main #upload {
+	width: 0;
+	grid-area: 4 / 1 / 5 / 2;
 }
 
 img#active_filter{

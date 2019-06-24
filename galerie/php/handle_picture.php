@@ -20,7 +20,7 @@ if (preg_match('/^data:image\/(\w+);base64,/', $data, $type)) {
 }
 $name = find_the_right_name().".{$type}";
 file_put_contents(path('/galerie/photo/').$name, $data);
-if ($filtre !== NULL)
+if ($filtre !== NULL && file_exists(path("/".get_good_path($filtre))))
 {
 	super_impose(path("/galerie/photo/").$name, path("/".get_good_path($filtre)));
 }
