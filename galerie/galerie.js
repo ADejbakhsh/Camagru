@@ -78,7 +78,7 @@
 
 	function create_button_upload() {
 		let div = document.querySelector('div.startbutton');
-		div.innerHTML += '<div id="upload"><p>Tu n\'as pas de camera tu peux donc upload un fichier(100Ko max)</p><input type="file" name="picture" accept="image/jpg|image/png|image/jpeg"><button>send</button></div>';
+		div.innerHTML += '<div id="upload"><p>(100Ko max)</p><input type="file" name="picture" accept="image/jpg|image/png|image/jpeg"><button>send</button></div>';
 		let input = document.querySelector('input[type=file]');
 		input.addEventListener('change', handle_file);
 	}
@@ -143,7 +143,7 @@
 		req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		req.onreadystatechange = function(event) {
 			if (this.readyState === XMLHttpRequest.DONE) {
-				if (this.status === 200) {
+				if (this.status === 200  && !this.response.match(/error/)) {
 					add_photo(null, this.response);
 				} 
 			}

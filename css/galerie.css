@@ -47,8 +47,8 @@ html, body {
 }
 
 div#upload {
-display: flex;
-flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 
 
@@ -61,9 +61,9 @@ img {
 }
 
 #main #filter { 
-grid-area: 1 / 1 / 4 / 2; 
-overflow-y: auto;
-overflow-x: hidden;
+	grid-area: 1 / 1 / 4 / 2; 
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 
@@ -71,6 +71,10 @@ img#active_filter{
 	position: absolute;
 
 }
+
+	input[type='file'] {
+		width: 17vw;
+	}
 
 a.filter img {
 	padding-bottom: 5px;
@@ -89,5 +93,57 @@ a.filter:active img {
 	border: solid cyan 3px;
 }
 
+@media screen and (max-width: 600px) {
+	* {
+		margin: 0;
+	}
+	#main  {
+		margin: 0;
+		display: grid;
+		grid-template-columns: 5fr 1fr;
+		grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
+		grid-column-gap: 0px;
+		grid-row-gap: 0px; 
+		width: 100%;
+	}
+	.video {
+		grid-area: 1 / 1 / 10 / 2!important;  
+	}
+	.filter img{
+		background-size: content;
+	}
+	#main #filter {
+		grid-area: 10 / 1 / 12 / 2!important;
+		overflow-y: hidden;
+		overflow-x: auto;
+		display: flex;
+		height: 100%;
+	}
+	#main #sidebar {
+		grid-area: 1 / 2 / 10 / 3!important;
+		height: 61vw;
+	}
+	#main #filter a {
+		 height: 13vw;
+		  width: auto;
+		   overflow: hidden;
+	border: solid grey 2px;
+	display:flex;
+	justify-content: center;
+	}
+	#main #filter img {
+		    height: auto;
+			 width: 400px;
+	}
+	p {
+		display:none;
+	}
+	input[type='file'] {
+		width: 17vw;
+	}
 
 
+	.startbutton {
+		grid-area: 10 / 2 / 12 / 3;
+	}
+}
