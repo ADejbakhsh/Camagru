@@ -48,11 +48,11 @@ function user_connect($login, $pass)
   $statement =  $DB_connect->prepare("SELECT
         login,
         password,
-        token
+        validated_account 
         FROM
          db.user 
         WHERE 
-         login = :login AND token IS NULL");
+         login = :login AND validated_account = 1");
   $statement->execute(['login' => $login]); 
   if (password_verify($pass , $statement->fetch()['1']))
     return (true);
@@ -66,4 +66,12 @@ function check_if_connected_and_redirect (){
       header('Location: /index.php');
 }
 
+# clear the token row
+function clear_token($email)
+{
+  global $DB_connect;
+
+  $statement =  $DB_connect->prepare("UPDATE db.user set token IS NULL WHERE email =: email");
+  $statement->execute(['token' => $email]);
+}
 ?>
