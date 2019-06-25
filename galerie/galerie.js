@@ -207,8 +207,8 @@
 		req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		req.onreadystatechange = function(event) {
 			if (this.readyState === XMLHttpRequest.DONE) {
-				if (this.status === 200) {
-					console.log(this);
+				if (this.status === 200 && !!this.response.match(/^done$/)) {
+					div.parentNode.removeChild(div);
 				} 
 			}
 		};
