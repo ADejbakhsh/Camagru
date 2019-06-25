@@ -12,23 +12,10 @@ layout("login");
     <link rel="stylesheet" type="text/css" href="../css/login.css">
 </head>
 <body>
+<div class="grid-container">
+  <div class="login">
     <form method="post" action="php/login.php" class="form">
-<?php
-if ($_GET['error'] == 1)
-{
-    echo "<h1 style=\"text-align: center;
-                      color: red;\">Error</h1>";
-    $_GET['error'] = 0;
-}
-if ($_GET['error'] == 2)
-{
-    echo "<h1 style=\"text-align: center;\">Please Log yourself</h1>";
-}
-else
-{
-    echo "<h1 style=\"text-align: center;\">Login</h1>";
-}
-?>
+        <h1 style="text-align: center;">Login</h1>
         <p>Login :</p>
         <input type="text" name="login" placeholder="Login" class="input" required>
         <br>
@@ -39,5 +26,8 @@ else
         <br>
         <input class="button" type="submit" name="submit" value="Login">
     </form>
+    <a href="forgot_pass.php">Forgot password ?</a>
+  </div>
+</div>
 </body>
 </html>
