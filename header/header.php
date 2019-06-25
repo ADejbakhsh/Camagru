@@ -16,7 +16,7 @@ function header_custom($title) {
 	if (!isset($_SESSION['user']))
 	{
 		echo "<a href=\"../../../user/login_page.php\" title=\"Login\" >Login</a>";
-		echo  "<a href=".path("user/register_page.php")." title='Register' >Register</a>";
+		echo  "<a href='/user/register_page.php' title='Register' >Register</a>";
 	}
 	else
 	{

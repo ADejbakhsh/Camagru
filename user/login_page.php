@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="../css/login.css">
 </head>
 <body>
-    <form method="post" action="login.php" class="form">
+    <form method="post" action="php/login.php" class="form">
 <?php
 if ($_GET['error'] == 1)
 {
@@ -24,7 +24,7 @@ if ($_GET['error'] == 1)
         <br>
         <br>
         <p>Password :</p>
-        <input type="password" name="passwd" placeholder="Password" class="input"  required>
+        <input type="password" name="pass" placeholder="Password" class="input"  required>
         <br>
         <br>
         <input class="button" type="submit" name="submit" value="Login">

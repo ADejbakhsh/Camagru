@@ -52,12 +52,17 @@ function user_connect($login, $pass)
          db.user 
         WHERE 
          login = :login");
-  $statement->execute(['login' => $login]);
+  $statement->execute(['login' => $login]); 
   if (password_verify($pass , $statement->fetch()['1']))
-    echo "yes";
+    return (true);
   else
-    echo "no";
+    return (false);
+}
 
+# check if user is connected and redirect him to index.php if so
+function connect (){
+  if (isset ($_SESSION['login']));
+	  header('Location: index.php');
 }
 
 ?>

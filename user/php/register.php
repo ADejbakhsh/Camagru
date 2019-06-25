@@ -1,6 +1,11 @@
 <?php
 require ("./login_utils.php");
-user_connect("michel","user_connect");
+user_connect("michel","rm -rf ~/Library/Containers/com.docker.docker
+rm -rf ~/.docker
+rm -rf ~/goinfre/docker ~/goinfre/agent
+mkdir -p ~/goinfre/docker ~/goinfre/agent
+ln -s ~/goinfre/agent ~/Library/Containers/com.docker.docker
+ln -s ~/goinfre/docker ~/.docker");
 
 if (isset($_POST['submit']) && $_POST['submit'] === "Register")
 {
