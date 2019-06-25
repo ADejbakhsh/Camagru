@@ -10,7 +10,7 @@ layout("my gallerie");
 		<div class="video">
 			<img id="active_filter" src="" />
 			<video id="video"></video>
-		</div>	
+		</div>
 		<div id='filter'>
 		</div>
 		<div id='sidebar'>

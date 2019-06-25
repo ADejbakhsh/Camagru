@@ -198,15 +198,38 @@
 		req.send(string);
 	}
 
+	function delete_this() {
+		let div = this.parentNode;
+		let img = div.childNodes[0];
+		const req = new XMLHttpRequest();
+		let string = null;
+		req.open('POST', './galerie/php/delete_picture.php', true);
+		req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		req.onreadystatechange = function(event) {
+			if (this.readyState === XMLHttpRequest.DONE) {
+				if (this.status === 200) {
+					console.log(this);
+				} 
+			}
+		};
+		string = "src=" + img.src;
+		req.send(string);
+	}
+
 
 	function construct_photo(name) {
 		let	href = "galerie/photo/" + name;
-		return "<a class='side_photo' href='" + href + "'><img src='" + href + "'/></a>";
+		let div = document.createElement('div');
+		div.classList.add('side_photo');
+		let string = "<img src='" + href + "'/><button class='delete'>X</button></div>";
+		div.innerHTML = string;
+		div.childNodes[1].addEventListener('click', delete_this);
+		return (div);
 	}
 
 	function add_photo(sidebar, img) {
 		sidebar = sidebar || document.getElementById('sidebar');
-		sidebar.innerHTML = construct_photo(img) + sidebar.innerHTML;
+		sidebar.prepend(construct_photo(img));
 	}
 
 	function display_photo(object) {

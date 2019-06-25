@@ -15,6 +15,16 @@ html, body {
 	width: 85vw; 
 }
 
+#sidebar div {
+	display: flex;
+	margin-bottom: 0.5vw;
+}
+
+#sidebar div button {
+	position: relative;
+	background-color: #CD5C5C;
+}
+
 
 
 #main #sidebar { 
