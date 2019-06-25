@@ -11,13 +11,12 @@ layout("my gallerie");
 			<img id="active_filter" src="" />
 			<video id="video"></video>
 		</div>	
-<div id='upload'>
-</div>
 		<div id='filter'>
 		</div>
 		<div id='sidebar'>
 		</div>
-		<button id="startbutton">Prendre une photo</button>
+		<div class='startbutton'>
+		</div>
 		<canvas style="display: none" id="canvas"></canvas>
 	</div>
 		<script charset="utf-8" src="galerie/check_device.js"></script>	

@@ -21,7 +21,6 @@
 	function startup() {
 		video = document.getElementById('video');
 		canvas = document.getElementById('canvas');
-		startbutton = document.getElementById('startbutton');
 		navigator.mediaDevices.getUserMedia({video: true, audio: false})
 			.then(function(stream) {
 				video.srcObject = stream;
@@ -45,35 +44,78 @@
 			}
 		}, false);
 
-		startbutton.addEventListener('click', function(ev){
-			takepicture();
-			ev.preventDefault();
-		}, false);
-
-
 		create_button_upload();
 		get_all_photo();
 		get_filter();
 		clearphoto();
 	}
 
+	function dont_send_it(button) {
+		button.removeEventListener('click', upload_photo);
+		button.style.backgroundColor = 'red';
+	}
+	function send_it(button) {
+		button.addEventListener('click', upload_photo);
+		button.style.backgroundColor = 'initial';
+	}
+
+	function  handle_file() {
+		const input = document.querySelector('input[type=file]');
+		let button = document.querySelector('div#upload button');
+		send_it(button);
+		let files = input.files;
+		if (files.length > 1 || files[0].size > 100000 || !files[0].type.match(/(jpeg|jpg|png)/))
+			dont_send_it(button);
+	}
+
 	function create_button_upload() {
-		let div = document.querySelector('div#upload');
-		div.innerHTML += '<form action="/upload_photo.php"><input type="file" name="picture" accept="image/*"><input type="submit"></form>';
+		let div = document.querySelector('div.startbutton');
+			div.innerHTML += '<div id="upload"><p>Tu n\'as pas de camera tu peux donc upload un fichier(100Ko max)</p><input type="file" name="picture" accept="image/jpg|image/png|image/jpeg"><button>send</button></div>';
+		let input = document.querySelector('input[type=file]');
+		input.addEventListener('change', handle_file);
 	}
 
 	function destroy_upload_button() {
-		let div = document.querySelector('div#upload');
+		const div = document.querySelector('div#upload');
+		let div_button = document.querySelector('div.startbutton');
+		let button = document.createElement('button');
+		button.id = 'startbutton';
+		button.textContent = "Prendre une photo";
 		div.innerHTML= "";
 		div.parentNode.removeChild(div);
+		div_button.append(button);
+		button.style.width = "100%"
+		button.style.height = "100%"
+		button.addEventListener('click', function(ev){
+			takepicture();
+			ev.preventDefault();
+		}, false);
 	}
 
 	function clearphoto() {
 		var context = canvas.getContext('2d');
 		context.fillStyle = "#AAA";
 		context.fillRect(0, 0, canvas.width, canvas.height);
-
 		var data = canvas.toDataURL('image/png', 0.7);
+	}
+
+	function upload_photo() {
+		let photo = document.querySelector('input[type=file]').files[0];
+		let req = new XMLHttpRequest();
+		let formData = new FormData();
+
+		formData.append("photo", photo);                                
+		req.open("POST", 'galerie/php/upload_photo.php');
+		req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		req.overrideMimeType("text/plain;");
+		req.onreadystatechange = function(event) {
+			if (this.readyState === XMLHttpRequest.DONE) {
+				if (this.status === 200) {
+					console.log(this);
+				} 
+			}
+		};
+		req.send(formData);
 	}
 
 	function send_photo_to_server(data) {
