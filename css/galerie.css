@@ -122,6 +122,8 @@ a.filter:active img {
 	#main #sidebar {
 		grid-area: 1 / 2 / 10 / 3!important;
 		height: 61vw;
+		overflow-y: auto;
+		overflow-x: hidden;
 	}
 	#main #filter a {
 		 height: 13vw;
