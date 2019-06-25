@@ -1,7 +1,11 @@
-<?PHP require_once("../header/layout.php"); ?>
+<?PHP 
+require ("php/login_utils.php");
+check_if_connected_and_redirect ();
+require_once($_SERVER['DOCUMENT_ROOT']."/header/layout.php");
+layout("Register"); ?>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="../css/login.css">
+<link rel="stylesheet" type="text/css" href="/css/login.css">
 </head>
 <body>
     <form method="post" action="./php/register.php" class="form">

@@ -1,11 +1,5 @@
 <?php
 require ("./login_utils.php");
-user_connect("michel","rm -rf ~/Library/Containers/com.docker.docker
-rm -rf ~/.docker
-rm -rf ~/goinfre/docker ~/goinfre/agent
-mkdir -p ~/goinfre/docker ~/goinfre/agent
-ln -s ~/goinfre/agent ~/Library/Containers/com.docker.docker
-ln -s ~/goinfre/docker ~/.docker");
 
 if (isset($_POST['submit']) && $_POST['submit'] === "Register")
 {
@@ -19,11 +13,12 @@ if (isset($_POST['submit']) && $_POST['submit'] === "Register")
   else
   {
     user_creation($_POST['login'], $_POST['email'], $_POST['pass']);
+    header('Location: ../check_mail.php');
   }
 }
   /*
   $login
-    = mysqli_real_escape_string($mysqli,
+    = mysqli_real_escape_string($mysqliheader('Location: '.path('index.php'));header('Location: '.path('index.php'));,
       $_POST['login']);
   $passwd = hash ('whirlpool',
     mysqli_real_escape_string($mysqli,

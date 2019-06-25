@@ -1,4 +1,10 @@
-<?PHP require_once("../header/header.php"); ?>
+<?PHP 
+require ("php/login_utils.php");
+check_if_connected_and_redirect ();
+require_once($_SERVER['DOCUMENT_ROOT']."/header/layout.php");
+layout("login");
+
+?>
 <html>
 <head>
     <meta charset="utf-8">
@@ -14,7 +20,11 @@ if ($_GET['error'] == 1)
                       color: red;\">Error</h1>";
     $_GET['error'] = 0;
 }
-    else
+if ($_GET['error'] == 2)
+{
+    echo "<h1 style=\"text-align: center;\">Please Log yourself</h1>";
+}
+else
 {
     echo "<h1 style=\"text-align: center;\">Login</h1>";
 }
@@ -30,5 +40,4 @@ if ($_GET['error'] == 1)
         <input class="button" type="submit" name="submit" value="Login">
     </form>
 </body>
-<?PHP require_once("../header/footer.php"); ?>
 </html>

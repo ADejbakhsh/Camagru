@@ -1,7 +1,14 @@
 <?php
 require ("./login_utils.php");
 
-user_connect($_POST['login'], $_POST['pass']);
+if (user_connect($_POST['login'], $_POST['pass']))
+{
+
+	$_SESSION['login'] = $_POST['login'];
+	header('Location: /index.php');
+}
+else
+	header('Location: ../login_page.php?error=1');
 /*function auth($login, $passwd, $users) {
 	if (!$passwd || !$login || !$users)
 		return FALSE;
