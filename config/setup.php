@@ -15,7 +15,9 @@ $statement =  $DB_connect->prepare("CREATE TABLE db.user
     login VARCHAR(255) CHARACTER SET utf8,
     email VARCHAR(255) CHARACTER SET utf8,
     password VARCHAR(255) CHARACTER SET utf8,
-    token VARCHAR(255) CHARACTER SET utf8
+    token VARCHAR(255) CHARACTER SET utf8,
+    validated_account TINYINT
+
   );");
 $statement->execute();
 

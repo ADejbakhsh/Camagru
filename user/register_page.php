@@ -31,7 +31,7 @@ layout("Register");
       else
       {
         user_creation($_POST['login'], $_POST['email'], $_POST['pass']);
-        header('Location: ../check_mail.php');
+        echo "<h1 style='border: 1px solid black;' >Check your mail</h1>";
       }
     }
     ?>

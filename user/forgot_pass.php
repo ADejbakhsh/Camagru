@@ -8,7 +8,7 @@ layout("Forgot password");
 <body>
 <div class="grid-container">
   <div class="login">
-  <form method="post" action="php/login.php" class="form">
+  <form method="post" action="php/new_pass.php" class="form">
         <h1 style="text-align: center;">Forgot password</h1>
         <p>Email adress:</p>
         <input type="email" name="email" placeholder="123@gmail.com" class="input" required>
