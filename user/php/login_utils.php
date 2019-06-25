@@ -8,19 +8,19 @@ function error_register($login, $email, $pass, $pass_bis)
 {
   $error_array = Array();
   if (fetch_bool("login", $login))
-    array_push( $error_array , 1);  #"error username already in use"
+    array_push( $error_array , "error username already in use");
   if (!preg_match("/^[a-zA-Z0-9]*$/u" ,$login))
-    array_push( $error_array , 9);  #"Login must be alphanumerique only"
+    array_push( $error_array , "Login must be alphanumerique only");
   if (strlen($login) < 3 || strlen($login) >= 255)
-    array_push($error_array, 5) ;   #"login must be longer than 3 and shorter than 255");
+    array_push($error_array, "login must be longer than 3 and shorter than 255");
   if (strlen($pass) < 8 || strlen($pass) >= 255 )
-    array_push( $error_array , 2);  #"error password must be longer than 8 and shorter than 255 "
+    array_push( $error_array , "error password must be longer than 8 and shorter than 255 ");
   if ($pass !== $pass_bis)
-    array_push( $error_array , 3);  #"password do not match"
+    array_push( $error_array , "password do not match");
   if (fetch_bool("email", $email))
-    array_push( $error_array , 4);  #"error email already in use"
+    array_push( $error_array , "error email already in use");
   if (!preg_match ( "/^\ *[!-~]{2,20}@[!-~]{2,20}\.[!-~]{2,20}\ *$/i" , $email))
-    array_push( $error_array , 10); #"invalide  email");
+    array_push( $error_array , "invalide  email");
   return($error_array);
 }
 
