@@ -17,7 +17,6 @@
 	var video = null;
 	var canvas = null;
 	var startbutton = null;
-
 	function startup() {
 		video = document.getElementById('video');
 		canvas = document.getElementById('canvas');
@@ -50,6 +49,15 @@
 		clearphoto();
 	}
 
+	 function getBase64(file) {
+		return new Promise((resolve, reject) => {
+			const reader = new FileReader();
+			reader.readAsDataURL(file);
+			reader.onload = () => resolve(reader.result);
+			reader.onerror = (error) => reject(error);
+		});
+	}
+
 	function dont_send_it(button) {
 		button.removeEventListener('click', upload_photo);
 		button.style.backgroundColor = 'red';
@@ -70,12 +78,15 @@
 
 	function create_button_upload() {
 		let div = document.querySelector('div.startbutton');
-			div.innerHTML += '<div id="upload"><p>Tu n\'as pas de camera tu peux donc upload un fichier(100Ko max)</p><input type="file" name="picture" accept="image/jpg|image/png|image/jpeg"><button>send</button></div>';
+		div.innerHTML += '<div id="upload"><p>Tu n\'as pas de camera tu peux donc upload un fichier(100Ko max)</p><input type="file" name="picture" accept="image/jpg|image/png|image/jpeg"><button>send</button></div>';
 		let input = document.querySelector('input[type=file]');
 		input.addEventListener('change', handle_file);
 	}
 
 	function destroy_upload_button() {
+		const video =  document.querySelector("#video");
+		if (!video)
+			return;
 		const div = document.querySelector('div#upload');
 		let div_button = document.querySelector('div.startbutton');
 		let button = document.createElement('button');
@@ -85,11 +96,11 @@
 		div.parentNode.removeChild(div);
 		div_button.append(button);
 		button.style.width = "100%"
-		button.style.height = "100%"
-		button.addEventListener('click', function(ev){
-			takepicture();
-			ev.preventDefault();
-		}, false);
+			button.style.height = "100%"
+			button.addEventListener('click', function(ev){
+				takepicture();
+				ev.preventDefault();
+			}, false);
 	}
 
 	function clearphoto() {
@@ -99,23 +110,70 @@
 		var data = canvas.toDataURL('image/png', 0.7);
 	}
 
-	function upload_photo() {
-		let photo = document.querySelector('input[type=file]').files[0];
-		let req = new XMLHttpRequest();
-		let formData = new FormData();
+	function display_photo_uploaded(response) {
+		if (!!response.match(/error/))
+			return ;
+		const div = document.querySelector('div.video');
+		const video = document.querySelector('#video');
+		const startbutton = document.querySelector('.startbutton');
+		let img = document.querySelector('#uploaded');
+		if (!!video)
+			video.parentNode.removeChild(video);
+		if (!img)
+		{
+			img = document.createElement('img');
+			let button = document.createElement('button');
+			button.textContent = 'Monter ces photos';
+			button.style.width = "100%";
+			img.id = 'uploaded';
+			startbutton.append(button);
+			div.append(img);
+			button.addEventListener('click', mount_them);
+		}
+		img.src = '/galerie/tmp/' + response;
+	}
 
-		formData.append("photo", photo);                                
-		req.open("POST", 'galerie/php/upload_photo.php');
-		req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	function mount_them() {
+		const filter = document.querySelector('#active_filter');
+		const uploaded = document.querySelector('#uploaded');
+		const req = new XMLHttpRequest();
+		let string = null;
+		req.open('POST', './galerie/php/mount_picture.php', true);
 		req.overrideMimeType("text/plain;");
+		req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		req.onreadystatechange = function(event) {
 			if (this.readyState === XMLHttpRequest.DONE) {
 				if (this.status === 200) {
-					console.log(this);
+					add_photo(null, this.response);
 				} 
 			}
 		};
-		req.send(formData);
+
+		if (!check_if_there_is_filter())
+			return ;
+		string = 'filter=' + filter.src + '&tmp=' + uploaded.src
+		req.send(string);
+	}
+
+	function upload_photo() {
+		let photo = document.querySelector('input[type=file]').files[0];
+		let req = new XMLHttpRequest();
+		var form_data = new FormData();        
+		req.open("POST", 'galerie/php/upload_photo.php', true);
+		req.overrideMimeType("text/plain;");
+		req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		req.onreadystatechange = function(event) {
+			if (this.readyState === XMLHttpRequest.DONE) {
+				if (this.status === 200) {
+					display_photo_uploaded(this.response);
+				} 
+			}
+		};
+		getBase64(photo)
+			.then((data) => {
+				req.send('file=' +  normalize_data(data));
+			})
+			.catch(error => console.error(error));
 	}
 
 	function send_photo_to_server(data) {
@@ -160,13 +218,15 @@
 
 	function change_filter() {
 		const filter = document.querySelector('#active_filter');
-		const video = document.getElementById('video');
+		let ref = document.getElementById('video');
+		if (!ref)
+			ref = document.querySelector('#uploaded');
 		filter.src = this.childNodes[0].src;
 		filter.style.width = "100%";
-		if (filter.width >= video.offsetWidth )
-			filter.style.width = video.offsetWidth + "px";
-		if (filter.height >= video.offsetHeight)
-			filter.style.width = video.offsetHeight + "px";
+		if (filter.width >= ref.offsetWidth )
+			filter.style.width = ref.offsetWidth + "px";
+		if (filter.height >= ref.offsetHeight)
+			filter.style.width = ref.offsetHeight + "px";
 	}
 
 	function display_filter(object) {
@@ -217,6 +277,10 @@
 		req.send();
 	}
 
+	function normalize_data(data) {
+			return (data.replace(/\+/g, '%2B'));
+	}
+
 	function takepicture() {
 		if (!check_if_there_is_filter())
 			return ;
@@ -226,8 +290,7 @@
 			canvas.height = height;
 			context.drawImage(video, 0, 0, video.videoWidth, height);
 			var data = canvas.toDataURL('image/jpeg', 1);
-			data = data.replace(/\+/g, '%2B');
-			send_photo_to_server(data);
+			send_photo_to_server(normalize_data(data));
 		} else {
 			clearphoto();
 		}

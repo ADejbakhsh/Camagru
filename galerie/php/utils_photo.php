@@ -1,21 +1,21 @@
 <?php
 session_start();
 require_once($_SERVER["DOCUMENT_ROOT"]."/src/utils.php");
-$dir_photo = path('/galerie/photo');
 $dir_filter = path('/galerie/filter');
 
-function find_the_right_name() {
-	$data  = get_all_photo();
+function find_the_right_name($path) {
+	if (!file_exists($path))
+		mkdir($path, 0755);
+	$data = get_all_photo($path);
 	$data = array_reverse($data);
 	preg_match('/\d+/', $data[0], $match);
 	return "img".strval(intval($match[0]) + 1);
 }
 
-function get_all_photo() {
-	global $dir_photo;
-	if (!file_exists($dir_photo))
+function get_all_photo($path) {
+	if (!file_exists($path))
 		return ;
-	$data = scandir($dir_photo);
+	$data = scandir($path);
 	unset($data[0]);
 	unset($data[1]);
 	natcasesort($data);

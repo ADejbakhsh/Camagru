@@ -19,7 +19,6 @@ layout("my gallerie");
 		</div>
 		<canvas style="display: none" id="canvas"></canvas>
 	</div>
-		<script charset="utf-8" src="galerie/check_device.js"></script>	
 		<script charset="utf-8" src="galerie/galerie.js"></script>	
 	</body>
 </html>
