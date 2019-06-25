@@ -8,3 +8,5 @@ if (isset ($_GET['token']))
     $statement->execute(['token' => $_GET['token']]);
  
 }
+header("Location: ../login_page.php?error=2");
+?>

@@ -1,6 +1,5 @@
 <?php
 require ("./login_utils.php");
-user_connect("michel","user_connect");
 
 if (isset($_POST['submit']) && $_POST['submit'] === "Register")
 {
@@ -14,11 +13,12 @@ if (isset($_POST['submit']) && $_POST['submit'] === "Register")
   else
   {
     user_creation($_POST['login'], $_POST['email'], $_POST['pass']);
+    header('Location: ../check_mail.php');
   }
 }
   /*
   $login
-    = mysqli_real_escape_string($mysqli,
+    = mysqli_real_escape_string($mysqliheader('Location: '.path('index.php'));header('Location: '.path('index.php'));,
       $_POST['login']);
   $passwd = hash ('whirlpool',
     mysqli_real_escape_string($mysqli,

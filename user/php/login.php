@@ -1,5 +1,15 @@
 <?php
-function auth($login, $passwd, $users) {
+require ("./login_utils.php");
+
+if (user_connect($_POST['login'], $_POST['pass']))
+{
+
+	$_SESSION['login'] = $_POST['login'];
+	header('Location: /index.php');
+}
+else
+	header('Location: ../login_page.php?error=1');
+/*function auth($login, $passwd, $users) {
 	if (!$passwd || !$login || !$users)
 		return FALSE;
 	while ($usr = mysqli_fetch_assoc($users)) {
@@ -36,5 +46,5 @@ if (isset($_POST['submit']) && $_POST['submit'] === "Login")
 		header('Location: login_page.php?error=1');
 	}
 }
-mysqli_close($mysqli);
+mysqli_close($mysqli);*/
 ?>

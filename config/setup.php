@@ -4,7 +4,7 @@ ini_set('display_errors', 1);
 require 'database.php';
 
 
-$statement =  $DB_connect->prepare("DROP DATABASE db;");
+$statement =  $DB_connect->prepare("DROP DATABASE IF EXISTS db;");
 $statement->execute();
 $statement =  $DB_connect->prepare("CREATE DATABASE db;");
 $statement->execute();

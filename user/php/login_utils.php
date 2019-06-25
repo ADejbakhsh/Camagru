@@ -47,17 +47,23 @@ function user_connect($login, $pass)
 
   $statement =  $DB_connect->prepare("SELECT
         login,
-        password
+        password,
+        token
         FROM
          db.user 
         WHERE 
-         login = :login");
-  $statement->execute(['login' => $login]);
+         login = :login AND token IS NULL");
+  $statement->execute(['login' => $login]); 
   if (password_verify($pass , $statement->fetch()['1']))
-    echo "yes";
+    return (true);
   else
-    echo "no";
+    return (false);
+}
 
+# check if user is connected and redirect him to index.php if so
+function check_if_connected_and_redirect (){
+  if (isset ($_SESSION['login']) && $_SESSION['login'] != NULL)
+      header('Location: /index.php');
 }
 
 ?>
