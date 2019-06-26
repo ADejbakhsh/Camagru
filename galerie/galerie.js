@@ -221,7 +221,7 @@
 		let	href = "/galerie/photo/" + name;
 		let div = document.createElement('div');
 		div.classList.add('side_photo');
-		let string = "<img src='" + href + "'/><button class='delete'>X</button></div>";
+		let string = "<img src='" + href + "'/><button class='delete'>X</button>";
 		div.innerHTML = string;
 		div.childNodes[1].addEventListener('click', delete_this);
 		return (div);

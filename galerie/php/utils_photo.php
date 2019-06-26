@@ -22,6 +22,10 @@ function get_all_photo($path) {
 	return array_values($data);
 }
 
+function get_scroll_photo($nb) {
+	return (get_all_photo(path("/galerie/photo"))[0]);
+}
+
 function get_filters() {
 	global $dir_filter;
 	if (!file_exists($dir_filter))

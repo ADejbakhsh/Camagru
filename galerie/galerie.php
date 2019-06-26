@@ -4,7 +4,7 @@ require_once('../header/layout.php');
 layout("my atelier photo");
 ?>
 
- <link rel="stylesheet" type="text/css" href="/css/galerie.css" />
+ <link rel="stylesheet" type="text/css" href="/css/mount.css" />
 
 	<div id="main">
 		<div class="video">
