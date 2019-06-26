@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once('../header/layout.php');
-layout("my gallerie");
+layout("my atelier photo");
 ?>
 
  <link rel="stylesheet" type="text/css" href="/css/galerie.css" />
