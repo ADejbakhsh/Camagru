@@ -67,11 +67,49 @@ function check_if_connected_and_redirect (){
 }
 
 # clear the token row
-function clear_token($email)
+function clear_token($token)
 {
   global $DB_connect;
 
-  $statement =  $DB_connect->prepare("UPDATE db.user set token IS NULL WHERE email =: email");
-  $statement->execute(['token' => $email]);
+  $statement =  $DB_connect->prepare("UPDATE db.user set token = NULL WHERE token = :token");
+  $statement->execute(['token' => $token]);
+}
+
+# check if token exist
+function check_if_token_exist($token)
+{
+  global $DB_connect;
+
+  $statement =  $DB_connect->prepare("SELECT
+        token
+      FROM 
+        db.user
+      WHERE
+        token = :token;");
+  $statement->execute(['token' => $token]);
+  if ($statement->fetch())
+    return (true);
+  return(false);
+}
+
+#error password return a array
+function error_password ($pass, $pass_bis)
+{
+  $error =Array();
+  if (strlen($pass) < 8 || strlen($pass) >= 255 )
+   array_push( $error , "error password must be longer than 8 and shorter than 255 ");
+  if ($pass !== $pass_bis)
+   array_push( $error , "password do not match");
+   return ($error);
+}
+
+#update password from pivot ->see exemple in /user/password_reset.php l33
+function update_password($new_pass, $pivot, $data_from_pivot)
+{
+  global $DB_connect;
+  $new_pass = password_hash($new_pass , PASSWORD_DEFAULT);
+
+  $statement =  $DB_connect->prepare("UPDATE db.user set password = :password WHERE ".$pivot." = :data_from_pivot");
+  $statement->execute(['password' => $new_pass, 'data_from_pivot' => $data_from_pivot ]);
 }
 ?>
