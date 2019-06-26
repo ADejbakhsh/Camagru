@@ -138,7 +138,7 @@
 		const uploaded = document.querySelector('#uploaded');
 		const req = new XMLHttpRequest();
 		let string = null;
-		req.open('POST', './galerie/php/mount_picture.php', true);
+		req.open('POST', '/galerie/php/mount_picture.php', true);
 		req.overrideMimeType("text/plain;");
 		req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		req.onreadystatechange = function(event) {
@@ -159,7 +159,7 @@
 		let photo = document.querySelector('input[type=file]').files[0];
 		let req = new XMLHttpRequest();
 		var form_data = new FormData();        
-		req.open("POST", 'galerie/php/upload_photo.php', true);
+		req.open("POST", '/galerie/php/upload_photo.php', true);
 		req.overrideMimeType("text/plain;");
 		req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		req.onreadystatechange = function(event) {
@@ -180,7 +180,7 @@
 		const filter = document.querySelector('#active_filter');
 		const req = new XMLHttpRequest();
 		let string = null;
-		req.open('POST', './galerie/php/handle_picture.php', true);
+		req.open('POST', '/galerie/php/handle_picture.php', true);
 		req.overrideMimeType("text/plain;");
 		req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		req.onreadystatechange = function(event) {
@@ -203,7 +203,7 @@
 		let img = div.childNodes[0];
 		const req = new XMLHttpRequest();
 		let string = null;
-		req.open('POST', './galerie/php/delete_picture.php', true);
+		req.open('POST', '/galerie/php/delete_picture.php', true);
 		req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		req.onreadystatechange = function(event) {
 			if (this.readyState === XMLHttpRequest.DONE) {
@@ -218,7 +218,7 @@
 
 
 	function construct_photo(name) {
-		let	href = "galerie/photo/" + name;
+		let	href = "/galerie/photo/" + name;
 		let div = document.createElement('div');
 		div.classList.add('side_photo');
 		let string = "<img src='" + href + "'/><button class='delete'>X</button></div>";
@@ -257,7 +257,7 @@
 		for (name of object) {
 			let link = document.createElement('a');
 			let img = document.createElement('img');
-			img.src = 'galerie/filter/' + name;
+			img.src = '/galerie/filter/' + name;
 			link.href = '#';
 			link.classList.add('filter');
 			link.addEventListener('click', change_filter);
@@ -268,7 +268,7 @@
 
 	function get_all_photo() {
 		const req = new XMLHttpRequest();
-		req.open('GET', './galerie/php/get_photo.php', true);
+		req.open('GET', '/galerie/php/get_photo.php', true);
 		req.onreadystatechange = function(event) {
 			if (this.readyState === XMLHttpRequest.DONE) {
 				if (this.status === 200) {
@@ -289,7 +289,7 @@
 
 	function get_filter() {
 		const req = new XMLHttpRequest();
-		req.open('GET', './galerie/php/get_filter.php', true);
+		req.open('GET', '/galerie/php/get_filter.php', true);
 		req.onreadystatechange = function(event) {
 			if (this.readyState === XMLHttpRequest.DONE) {
 				if (this.status === 200) {
