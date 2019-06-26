@@ -123,7 +123,7 @@
 		{
 			img = document.createElement('img');
 			let button = document.createElement('button');
-			button.textContent = 'Monter ces photos';
+			button.textContent = 'Monter';
 			button.style.width = "100%";
 			img.id = 'uploaded';
 			startbutton.append(button);

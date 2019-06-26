@@ -93,7 +93,7 @@ a.filter:active img {
 	border: solid cyan 3px;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 750px) {
 	* {
 		margin: 0;
 	}
