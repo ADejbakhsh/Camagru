@@ -21,4 +21,30 @@ $statement =  $DB_connect->prepare("CREATE TABLE db.user
   );");
 $statement->execute();
 
+$statement =  $DB_connect->prepare("CREATE TABLE db.img
+  (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) CHARACTER SET utf8,
+    user_id INT NOT NULL
+  );");
+$statement->execute();
+
+$statement =  $DB_connect->prepare("CREATE TABLE db.like
+  (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    img_id INT NOT NULL,
+    user_id INT NOT NULL
+  );");
+$statement->execute();
+
+$statement =  $DB_connect->prepare("CREATE TABLE db.commentary
+  (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    img_id INT NOT NULL,
+    body VARCHAR(255) CHARACTER SET utf8,
+    user_id INT NOT NULL
+  );");
+$statement->execute();
+
+
 ?>

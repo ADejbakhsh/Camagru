@@ -22,7 +22,7 @@ layout("login");
       if ($_GET['error'] == '2')
       echo "<h2>Account validated</h2>";
     }
-    ?>`
+    ?>
     <form method="post" action="php/login.php" class="form">
         <h1 style="text-align: center;">Login</h1>
         <p>Login :</p>
