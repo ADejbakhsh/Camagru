@@ -21,6 +21,7 @@ function header_custom($title) {
 	}
 	else
 	{
+		echo "<a href=\"/user/profile.php\" title=\"Profile\" >Profile</a>";
 		echo  "<a href=\"../../../user/Deconexion.php\" title=\"Deconexion\" >Deconexion</a>";
 	}
 	echo " </div>";

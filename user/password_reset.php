@@ -15,25 +15,7 @@ layout("Forgot password");
     <div class="grid-container">
         <div class="login">
             <?PHP
-            if (isset($_POST['submit']) && $_POST['submit'] === "Reset")
-                if (isset($_POST['pass']) && isset($_POST['pass_bis']))
-                 {
-                    $error = error_password($_POST['pass'], $_POST['pass_bis']); 
-                    if (isset ($error['0']))
-                    {
-                        echo "<ul>";
-                        foreach ($error as $ttt => $tmp) 
-                        {
-                            echo "<li>" . $tmp . "</li>";
-                        }
-                        echo "</ul>";
-                     }
-                     else
-                     {
-                         update_password($_POST['pass'], "token", $_GET['token']);
-                         clear_token($_GET['token']);
-                     }
-                }
+            reset_password_if_all_good();
             echo  '<form method="post" action="/user/password_reset.php?token='.$_GET['token'].'">' ?>
                     <p>New Password :</p>
                     <input type="password" name="pass" placeholder="Tough password" class="input" required>

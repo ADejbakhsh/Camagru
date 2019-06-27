@@ -16,24 +16,7 @@ layout("Register");
   <div class="login">
     <form method="post" action="./register_page.php">
     <?PHP
-    if (isset($_POST['submit']) && $_POST['submit'] === "Register")
-    {
-      $error = error_register($_POST['login'], $_POST['email'], $_POST['pass'], $_POST['pass_bis']);
-      if (isset ($error['0']))
-      {
-        echo "<ul>";
-        foreach ($error as $ttt => $tmp)
-        {
-          echo "<li>".$tmp."</li>";
-        }
-        echo "</ul>";        
-      }
-      else
-      {
-        user_creation($_POST['login'], $_POST['email'], $_POST['pass']);
-        echo "<h1 style='border: 1px solid black;' >Check your mail</h1>";
-      }
-    }
+    register_form()
     ?>
         <h1 style="text-align: center;">Register</h1>
         <p>Login :</p>
