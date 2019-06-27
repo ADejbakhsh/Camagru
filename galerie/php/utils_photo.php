@@ -22,6 +22,18 @@ function get_all_photo($path) {
 	return array_values($data);
 }
 
+function photo_exist($img) {
+	return(file_exists(path("/galerie/photo/$img")));
+}
+
+function valid_photo($img) {
+	$type = mime_content_type(path("/galerie/photo/$img"));
+	if (preg_match('/(jpeg|png|jpg)/', $type, $match))
+		return true;
+	else
+		return false;
+}
+
 function get_scroll_photo($nb) {
 	return (get_all_photo(path("/galerie/photo"))[0]);
 }

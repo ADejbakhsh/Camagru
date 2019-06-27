@@ -4,7 +4,7 @@
 		let	href = "/galerie/photo/" + name;
 		let div = document.createElement('div');
 		div.classList.add('photo_loaded');
-		let string = "<img src='" + href + "'/>";
+		let string = "<a href='/galerie/photo.php?img=" + name + "'><img src='" + href + "'/></a>";
 		div.innerHTML = string;
 		return (div);
 	}
@@ -53,5 +53,6 @@
 	window.addEventListener("resize", lazyload);
 	window.addEventListener("orientationChange", lazyload);
 
+	window.addEventListener('load', lazyload);
 	window.addEventListener('load', load_photo);
 })();
