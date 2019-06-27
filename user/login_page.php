@@ -14,6 +14,15 @@ layout("login");
 <body>
 <div class="grid-container">
   <div class="login">
+    <?PHP
+    if (isset($_GET['error']))
+    {
+      if ($_GET['error'] == '1')
+        echo "<p>Error either the account is not validated or you didn't enter good information</p>";
+      if ($_GET['error'] == '2')
+      echo "<h2>Account validated</h2>";
+    }
+    ?>`
     <form method="post" action="php/login.php" class="form">
         <h1 style="text-align: center;">Login</h1>
         <p>Login :</p>
