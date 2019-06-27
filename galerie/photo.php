@@ -6,6 +6,9 @@ if (!(photo_exist($_GET['img']) && valid_photo($_GET['img'])))
 
 layout('photo');
 echo "<div id='main'><img src='/galerie/photo/".$_GET['img']."'></div>";
+echo var_dump($_SERVER);
 ?>
+
+			<script src="/galerie/photo.js"></script>
 	</body>
 </html>
