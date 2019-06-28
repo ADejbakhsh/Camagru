@@ -1,6 +1,6 @@
 <?PHP 
-require ("php/login_utils.php");
-check_if_connected_and_redirect ();
+require_once($_SERVER['DOCUMENT_ROOT']."/php/login_utils.php");
+check_if_connected_and_redirect();
 require_once($_SERVER['DOCUMENT_ROOT']."/header/layout.php");
 layout("login");
 

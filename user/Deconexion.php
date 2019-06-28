@@ -1,7 +1,7 @@
 <?PHP
-require ("php/login_utils.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/php/login_utils.php");
 
-$_SESSION['login'] = NULL;
+session_destroy();
 
 header('Location: /index.php');
 ?>

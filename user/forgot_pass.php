@@ -1,4 +1,5 @@
 <?PHP
+#block connected user
 require_once($_SERVER['DOCUMENT_ROOT']."/header/layout.php");
 layout("Forgot password");
 ?>
