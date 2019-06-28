@@ -1,5 +1,7 @@
 <?php
-#need to block at all cost;
+require_once($_SERVER["DOCUMENT_ROOT"] . "/src/utils.php");
+block_all();
+
 $DB_dsn = 'mysql:host=localhost:3306';
 $DB_user = 'root';
 $DB_password = 'test';

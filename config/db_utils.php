@@ -1,5 +1,6 @@
 <?php
-#need to block at all cost;
+require_once($_SERVER["DOCUMENT_ROOT"] . "/src/utils.php");
+block_all();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 

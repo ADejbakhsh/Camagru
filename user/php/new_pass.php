@@ -1,6 +1,6 @@
 <?PHP
 require_once($_SERVER['DOCUMENT_ROOT']."/user/php/login_utils.php");
-check_if_connected_and_redirect ();
+block_if_connected();
 require_once($_SERVER['DOCUMENT_ROOT']."/header/layout.php");
 layout("check mail");
 

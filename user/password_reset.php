@@ -2,7 +2,7 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/php/login_utils.php");
 if (!(isset($_GET['token']) && check_if_token_exist($_GET['token'])))
     header('Location: /index.php');
-check_if_connected_and_redirect();
+block_if_connected();
 require_once($_SERVER['DOCUMENT_ROOT'] . "/header/layout.php");
 layout("Forgot password");
 ?>

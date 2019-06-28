@@ -46,25 +46,6 @@ function user_connect($login, $pass)
     return (false);
 }
 
-# check if user is connected and redirect him to index.php if so
-function check_if_connected_and_redirect()
-{
-  if (isset($_SESSION['login']) && $_SESSION['login'] != NULL)
-  {
-    header('Location: /index.php');
-	exit;
-  }
-}
-
-# reverse result of the previous function
-function check_if_not_connected_and_redirect()
-{
-  if (!isset($_SESSION['login']) || $_SESSION['login'] == NULL)
-  {
-    header('Location: /index.php');
-	exit;
-  }
-}
 
 # clear the token row
 function clear_token($token)
