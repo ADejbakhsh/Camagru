@@ -50,14 +50,20 @@ function user_connect($login, $pass)
 function check_if_connected_and_redirect()
 {
   if (isset($_SESSION['login']) && $_SESSION['login'] != NULL)
+  {
     header('Location: /index.php');
+	exit;
+  }
 }
 
 # reverse result of the previous function
 function check_if_not_connected_and_redirect()
 {
   if (!isset($_SESSION['login']) || $_SESSION['login'] == NULL)
+  {
     header('Location: /index.php');
+	exit;
+  }
 }
 
 # clear the token row

@@ -3,7 +3,6 @@ require_once($_SERVER['DOCUMENT_ROOT']."/php/login_utils.php");
 check_if_connected_and_redirect();
 require_once($_SERVER['DOCUMENT_ROOT']."/header/layout.php");
 layout("login");
-
 ?>
 		<link rel="stylesheet" type="text/css" href="../css/login.css">
 		<div class="grid-container">
@@ -16,7 +15,7 @@ if (isset($_GET['error']))
 	if ($_GET['error'] == '2')
 		echo "<h2>Account validated</h2>";
 }
-?>`
+?>
 				<form method="post" action="php/login.php" class="form">
 					<h1 style="text-align: center;">Login</h1>
 					<p>Login :</p>

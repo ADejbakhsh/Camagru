@@ -1,17 +1,10 @@
 <?PHP
-require("php/login_utils.php");
+require_once($_SERVER['DOCUMENT_ROOT']."php/login_utils.php");
 check_if_not_connected_and_redirect();
 require_once($_SERVER['DOCUMENT_ROOT'] . "/header/layout.php");
 layout("login");
-
-
-
 ?>
-
-<head>
     <link rel="stylesheet" type="text/css" href="/css/login.css">
-</head>
-<body>
     <div class="grid-container">
         <div class="login">
             <?PHP

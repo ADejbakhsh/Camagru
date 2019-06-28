@@ -1,5 +1,5 @@
 <?PHP
-require ("login_utils.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/user/php/login_utils.php");
 check_if_connected_and_redirect ();
 require_once($_SERVER['DOCUMENT_ROOT']."/header/layout.php");
 layout("check mail");

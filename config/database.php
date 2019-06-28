@@ -1,4 +1,5 @@
 <?php
+#need to block at all cost;
 $DB_dsn = 'mysql:host=localhost:3306';
 $DB_user = 'root';
 $DB_password = 'test';

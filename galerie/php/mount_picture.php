@@ -1,4 +1,5 @@
 <?php
+#block unconnect
 require_once($_SERVER['DOCUMENT_ROOT'].'/galerie/php/utils_photo.php');
 $file = $_POST['tmp'];
 $filtre = $_POST['filter'];

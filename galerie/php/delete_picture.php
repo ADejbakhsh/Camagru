@@ -1,4 +1,5 @@
 <?php
+#block unconnect and not good user
 require_once($_SERVER['DOCUMENT_ROOT'].'/galerie/php/utils_photo.php');
 $src = $_POST['src'];
 
@@ -14,9 +15,7 @@ if (!file_exists($src))
 	echo "error";
 	exit;
 }
-
 unlink($src);
-
 
 echo "done";
 ?>

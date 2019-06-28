@@ -8,6 +8,7 @@ if (!(valid_request('post') && $_POST['img'] !== NULL && photo_exist($_POST['img
 }
 if ($_POST['input'] !== NULL && valid_input($_POST['input']))
 {
+	#block unconnect
 	$comms = put_comment($_POST['img'], $_POST['input']);
 	echo json_encode($comms);
 }

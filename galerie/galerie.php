@@ -1,6 +1,6 @@
 <?php
-session_start();
-require_once('../header/layout.php');
+#block if unconnect
+require_once($_SERVER['DOCUMENT_ROOT'].'/header/layout.php');
 layout("my atelier photo");
 ?>
 
