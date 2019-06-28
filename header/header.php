@@ -8,6 +8,7 @@ function header_custom($title) {
 	echo "<title>".$title."</title>";
 	echo "<link rel='icon' type='image/png' href='/galerie/favicon.png'/>";
 	echo "<link rel='stylesheet' href='/css/header.css'>";
+	echo "<meta name='viewpor' content='width=device-width, initial-scale=1'>";
 	echo "</head>";
 	echo "<body>";
 	echo "<div class='header'>";
