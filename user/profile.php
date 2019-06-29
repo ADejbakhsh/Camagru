@@ -1,5 +1,5 @@
 <?PHP
-require_once($_SERVER['DOCUMENT_ROOT']."php/login_utils.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/user/php/login_utils.php");
 block_if_not_connected();
 require_once($_SERVER['DOCUMENT_ROOT'] . "/header/layout.php");
 layout("login");
@@ -31,7 +31,7 @@ layout("login");
             </div>
             <div class="login">
                 <?PHP
-                 reset_password_if_all_good();
+                 reset_password_if_all_good("id", $_SESSION['user_id']);
                 ?>
             <form method="post" action="/user/profile.php">
                 <p>New password :</p>

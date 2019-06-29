@@ -1,5 +1,5 @@
 <?PHP 
-require("php/login_utils.php");
+require_once("php/login_utils.php");
 block_if_connected();
 require_once($_SERVER['DOCUMENT_ROOT']."/header/layout.php");
 layout("Register"); 

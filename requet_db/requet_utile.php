@@ -1,6 +1,6 @@
 <?PHP
 require_once($_SERVER["DOCUMENT_ROOT"] . "/src/utils.php");
-require(path("/config/db_utils.php"));
+require_once(path("/config/db_utils.php"));
 
 #add picturs to user
 function add_pic_to_user($pic_name)
@@ -23,7 +23,18 @@ function del_pic_of_user($pic_name)
 
 }
 
-
+function fetch_user_id()
+{  
+    global $DB_connect;
+    if(isset($_SESSION['login']) && $_SESSION['login'] != NULL)
+    {
+        $statement =  $DB_connect->prepare("SELECT id FROM db.user WHERE login = :login");
+        $statement->execute(['login'=> $_SESSION['login']]);
+        return ($statement->fetch()['0']);
+    }
+    else
+        return (false);
+}
 
 
 ?>
