@@ -17,23 +17,15 @@
 	}
 
 	function load_photo() {
-		const req = new XMLHttpRequest();
-		let string = "scroll=" + "0";
-		req.open('POST', '/galerie/php/get_photo.php', true);
-		req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		req.onreadystatechange = function(event) {
-			if (this.readyState === XMLHttpRequest.DONE) {
-				if (this.status === 200) {
-					console.log(this.response);
-					display_photo([JSON.parse(this.response)]); 
-					display_photo([JSON.parse(this.response)]); 
-					display_photo([JSON.parse(this.response)]); 
-					display_photo([JSON.parse(this.response)]); 
-					display_photo([JSON.parse(this.response)]); 
-				} 
-			}
-		};
-		req.send(string);
+		return new Promise((resolve, reject) => {
+			const req = new XMLHttpRequest();
+			let string = "scroll=" + "0";
+			req.open('POST', '/galerie/php/get_photo.php', true);
+			req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			req.onload = () => resolve(req.responseText);
+			req.onerror = () => reject(req.statusText);
+			req.send(string);
+		});
 	}
 
 	function add_photo(sidebar, img) {
@@ -41,18 +33,28 @@
 	}
 
 
-	function lazyload () {
+	function lazyload() {
 		lazyloadThrottleTimeout = setTimeout(function() {
 			let div = document.querySelector("#to_scroll");
 			if (window.pageYOffset + window.innerHeight >= document.body.clientHeight - div.offsetHeight)
-				load_photo();
+			{
+				let tmp = window.pageYOffset;
+				load_photo().then(function(responseText) {
+					display_photo([JSON.parse(responseText)]); 
+					display_photo([JSON.parse(responseText)]); 
+					display_photo([JSON.parse(responseText)]); 
+					display_photo([JSON.parse(responseText)]); 
+					display_photo([JSON.parse(responseText)]); 
+					window.scroll(0, tmp);
+				});
+			} 
 		}, 1500)};
 
 
-	document.addEventListener("scroll", lazyload);
-	window.addEventListener("resize", lazyload);
-	window.addEventListener("orientationChange", lazyload);
+document.addEventListener("scroll", lazyload);
+window.addEventListener("resize", lazyload);
+window.addEventListener("orientationChange", lazyload);
 
-	window.addEventListener('load', lazyload);
-	window.addEventListener('load', load_photo);
+window.addEventListener('load', lazyload);
+window.addEventListener('load', load_photo);
 })();

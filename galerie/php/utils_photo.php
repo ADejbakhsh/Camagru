@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once($_SERVER["DOCUMENT_ROOT"]."/src/utils.php");
+require_once(path("/config/db_utils.php"));
 $dir_filter = path('/galerie/filter');
 
 function find_the_right_name($path) {
@@ -84,5 +85,25 @@ function super_impose($src, $filter)
 	imagesavealpha($image_1, true);
 	imagecopy($image_1, $image_filter,  imagesx($image_1) - $sx - $marge_right, imagesy($image_1) - $sy - $marge_bottom, 0, 0, $width_small, $height_small);
 	imagejpeg($image_1, $src);
+}
+
+function get_image_name($url)
+{
+	return (preg_match("/photo\/\K.*/", $url));
+}
+
+
+# return bool if the img belong to the user
+function img_belong_to_user($img)
+{
+	$img = get_image_name($img);
+
+	global $DB_connect;
+
+	$statement = $DB_connect->prepare("SELECT user_id FROM db.img WHERE name = :img");
+	$statement->execute(['img' => $img]);
+	if ($statement->fetch()['0'] == $_SESSION['user_id'])
+		return(true);
+	return(false);
 }
 ?>

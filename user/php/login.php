@@ -1,6 +1,7 @@
 <?php
-require_once("../../requet_db/requet_utile.php");
-require_once("./login_utils.php");
+
+require_once($_SERVER['DOCUMENT_ROOT']."/user/php/login_utils.php");
+require_once(path("/requet_db/requet_utile.php"));
 
 if (isset($_POST['login']) && $_POST['pass'] && user_connect($_POST['login'], $_POST['pass']))
 {

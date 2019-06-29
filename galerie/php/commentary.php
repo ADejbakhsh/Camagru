@@ -1,5 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/galerie/php/utils_photo.php');
+block_if_connected();
 
 if (!(valid_request('post') && $_POST['img'] !== NULL && photo_exist($_POST['img']) && valid_photo($_POST['img'])))
 {
@@ -8,6 +9,7 @@ if (!(valid_request('post') && $_POST['img'] !== NULL && photo_exist($_POST['img
 }
 if ($_POST['input'] !== NULL && valid_input($_POST['input']))
 {
+	#block unconnect
 	$comms = put_comment($_POST['img'], $_POST['input']);
 	echo json_encode($comms);
 }

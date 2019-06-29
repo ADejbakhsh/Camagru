@@ -1,21 +1,17 @@
 <?PHP
-require("php/login_utils.php");
-if (!isset($_GET['token']) || !check_if_token_exist($_GET['token']))
+require_once($_SERVER['DOCUMENT_ROOT']."/user/php/login_utils.php");
+if (!(isset($_GET['token']) && check_if_token_exist($_GET['token'])))
     header('Location: /index.php');
-check_if_connected_and_redirect();
+block_if_connected();
 require_once($_SERVER['DOCUMENT_ROOT'] . "/header/layout.php");
 layout("Forgot password");
 ?>
-<html>
-<head>
     <link rel="stylesheet" type="text/css" href="/css/login.css">
-</head>
-
-<body>
     <div class="grid-container">
         <div class="login">
             <?PHP
-            reset_password_if_all_good();
+            reset_password_if_all_good("token", $_GET['token']);
+            clear_token($_GET['token']);
             echo  '<form method="post" action="/user/password_reset.php?token='.$_GET['token'].'">' ?>
                     <p>New Password :</p>
                     <input type="password" name="pass" placeholder="Tough password" class="input" required>
@@ -29,5 +25,4 @@ layout("Forgot password");
             </div>
         </div>
     </body>
-
-    </html>
+</html>
