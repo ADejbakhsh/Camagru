@@ -1,6 +1,7 @@
 <?PHP
 require_once($_SERVER["DOCUMENT_ROOT"] . "/src/utils.php");
 require_once(path("/config/db_utils.php"));
+
 block_if_connected();
 
 # error handling for register

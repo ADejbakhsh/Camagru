@@ -1,4 +1,4 @@
 <?PHP
-require("./requet_utile.php");
-fetch_user_id();
+require_once("./requet_utile.php");
+var_dump($_SESSION['user_id']);
 ?>

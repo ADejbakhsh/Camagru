@@ -1,6 +1,7 @@
 <?PHP
 require_once($_SERVER["DOCUMENT_ROOT"] . "/src/utils.php");
-require(path("/config/db_utils.php"));
+require_once(path("/config/db_utils.php"));
+
 
 #add picturs to user
 function add_pic_to_user($pic_name)
