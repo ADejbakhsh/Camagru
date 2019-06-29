@@ -7,6 +7,6 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/galerie/php/utils_photo.php');
 
 if (valid_request('get'))
 	echo "true";
-else(valid_request('post'))
-	return "false";
+else if (valid_request('post'))
+	echo "false";
 ?>

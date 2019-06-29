@@ -22,17 +22,21 @@
 		let like =  document.querySelector('#like');
 		like.innerHTML = "";
 		like.innerHTML = '<img src="/assets/like.png"/>';
+		document.querySelector('#like img').addEventListener('click', toggle_like);
 	}
 
 	function display_unlike() {
 		let like =  document.querySelector('#like');
 		like.innerHTML = "";
 		like.innerHTML = '<img src="/assets/unlike.png"/>';
+		document.querySelector('#like img').addEventListener('click', toggle_like);
 	}
 
 	function toggle_like() {
 		const req = new XMLHttpRequest();
-		req.open('POST', '/galerie/php/like.php?src=' + get_img(), true);
+		req.open('POST', '/galerie/php/like.php', true);
+		req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		let string = "img=" + get_img();
 		req.onreadystatechange = function(event) {
 			if (this.readyState === XMLHttpRequest.DONE) {
 				if (this.status === 200 && !this.response.match(/error/)) {
@@ -43,6 +47,7 @@
 				} 
 			}
 		};
+		req.send(string);
 	}
 
 	function is_liked() {
@@ -58,6 +63,7 @@
 				} 
 			}
 		};
+		req.send();
 	}
 
 	function get_img() {
@@ -69,7 +75,7 @@
 	function display_commentary(value) {
 		const div = document.createElement('div');
 		const commentary = document.querySelector('#commentary');
-		div.innerHTML = "<span>"+ value.user +" dit: </span>"
+		div.innerHTML = "<span>"+ value.user +" dit: </span>";
 			div.innerHTML += "<p>" + value.body +"</p>";
 		commentary.append(div);
 	}
@@ -133,8 +139,8 @@
 	function create_input() {
 		const new_commentary = document.createElement('div');
 		new_commentary.id = 'new_commentary';
-		new_commentary.innerHTML = "<input type='text' placeholder='nouveau commentaire'/><button>ajouter</button>"
-			new_commentary.querySelector('button').addEventListener('click', add_commentary);
+		new_commentary.innerHTML = "<input type='text' placeholder='nouveau commentaire'/><button>ajouter</button>";
+		new_commentary.querySelector('button').addEventListener('click', add_commentary);
 		return new_commentary;
 	}
 
@@ -145,7 +151,6 @@
 		div.id = 'commentary';
 		document.querySelector('#main').append(div);
 		document.querySelector('#main').append(new_commentary);
-		document.querySelector('#like').addEventListener('click', toggle_like);
 		if (img && img.src !== "")
 			load_commentary(img.src.match(/img.*$/));
 		if (is_liked())
