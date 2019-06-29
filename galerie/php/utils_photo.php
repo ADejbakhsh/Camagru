@@ -42,15 +42,15 @@ function valid_photo($img) {
 
 function get_scroll_photo($nb) {
 	$array  = fetch_all_pic($nb);
-	
+	return $array;	
 }
 
 function get_all_com($name_img) {
-	return [];
+	return (fetch_all_comment_of_image($name_img));
 }
 
-function put_comment($img, $input) {
-	return array("user" => "george", "body" => $input);
+function put_comment($user, $input) {
+	return array("user" => $user, "body" => $input);
 }
 
 function get_filters() {

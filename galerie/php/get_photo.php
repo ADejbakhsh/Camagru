@@ -5,16 +5,16 @@ $photo = "";
 
 if (isset($_POST['scroll']) && $_POST['scroll'] !== NULL && !is_nan($_POST['scroll']))
 {
-	$photo = get_scroll_photo(intval($_POST['scroll']));
-	if (count($photo) === 0)
-	$photo = "done";
+  $photo = get_scroll_photo(intval($_POST['scroll']));
+  if (count($photo) === 0)
+    $photo = "done";
 }
 else
 {
-	if (check_if_connected())
-	$photo = fetch_all_pic_of_user();
-	else
-	$photo = "error";
+  if (check_if_connected())
+    $photo = fetch_all_pic_of_user();
+  else
+    $photo = "error";
 }
 
 echo json_encode($photo);

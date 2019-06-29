@@ -83,17 +83,72 @@ function fetch_all_pic_of_user()
         return ($array);
 }
 
-function add_comment($img_id, $body)
+function add_comment($img_name, $body)
 {
     global $DB_connect;
     
-    $statement =  $DB_connect->prepare("INSERT INTO db.commentary (img_id, body, user_id) WHERE VALUES (:img_id, :body , :user_id)");
-    $statement->execute(['img_id' => $img_id, 'body' => $body , 'user_id' => $_SESSION['user_id']]);
-        
-    #change data type for comment
-    $statement =  $DB_connect->prepare("INSERT INTO db.commentary (img_id, body, user_id) WHERE VALUES (:img_id, :body , :user_id)");
-    $statement->execute(['img_id' => $img_id, 'body' => $body , 'user_id' => $_SESSION['user_id']]);
-    
+    $statement =  $DB_connect->prepare("SELECT id FROM db.img WHERE name = :img_name LIMIT 1");
+    $statement->execute(['img_name' => $img_name]);
+    $tmp = $statement->fetch()['0'];
+    $statement =  $DB_connect->prepare("INSERT INTO db.commentary (img_id, body, user_id) VALUES ( $tmp ,:body , :user_id)");
+    $statement->execute(['body' => $body , 'user_id' => $_SESSION['user_id']]);
 }
 
+function fetch_all_comment_of_image($imag_name)
+{
+    global $DB_connect;
+ 
+        $statement =  $DB_connect->prepare("SELECT login, body 
+        FROM db.commentary 
+        INNER JOIN db.user ON commentary.user_id = user.id 
+        INNER JOIN db.img ON img.id = commentary.img_id 
+        WHERE img.name = :img_name;
+        ORDER BY commentary.id
+        ");
+        $statement->execute(['img_name' => $imag_name]);
+        $array = Array();
+        foreach($statement->fetchAll() as $tmp => $ttt)
+        {
+            array_push($array, put_comment($ttt['login'], $ttt['body']));
+        }
+        return ($array);
+}
+
+function like($img_name)
+{
+    global $DB_connect;
+
+    $statement =  $DB_connect->prepare("SELECT id FROM db.img WHERE name = :img_name LIMIT 1");
+    $statement->execute(['img_name' => $img_name]);
+    $tmp = $statement->fetch()['0'];
+    $statement =  $DB_connect->prepare("INSERT INTO db.like (img_id, user_id) VALUES ($tmp, :user)");
+    $statement->execute(['user' => $_SESSION['user_id']]);
+}
+
+function unlike($img_name)
+{
+     global $DB_connect;
+ 
+        $statement =  $DB_connect->prepare("DELETE db.like
+        FROM
+            db.like
+        INNER JOIN db.img ON like.img_id = img.id
+        WHERE img.name = :img_name AND like.user_id = :user_id ");
+        $statement->execute(['img_name' => $img_name, 'user_id' => $_SESSION['user_id']]);
+}
+
+function is_liked($img_name)
+{
+     global $DB_connect;
+ 
+        $statement =  $DB_connect->prepare("SELECT db.like.id
+        FROM db.like 
+        INNER JOIN db.img ON img.id = like.img_id
+        WHERE img.name = :img_name AND like.user_id = ".$_SESSION['user_id']);
+        $statement->execute(['img_name' => $img_name]);
+        if (count($statement->fetchAll()) === 0)
+            return ("false");
+        else
+            return("true");
+}
 ?>
