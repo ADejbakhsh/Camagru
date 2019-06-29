@@ -1,6 +1,6 @@
 <?php
-#block unconnect
 require_once($_SERVER['DOCUMENT_ROOT'].'/galerie/php/utils_photo.php');
+block_if_not_connected();
 $file = $_POST['tmp'];
 $filtre = $_POST['filter'];
 
@@ -15,7 +15,7 @@ $filtre = path("/".get_good_path($filtre));
 
 if (!file_exists($file) || !file_exists($filtre))
 {
-echo "error";	
+	echo "error";	
 	exit;
 }
 

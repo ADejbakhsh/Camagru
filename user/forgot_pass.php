@@ -1,7 +1,7 @@
 <?PHP
-#block connected user
-block_if_connected();
+require_once($_SERVER['DOCUMENT_ROOT']."/src/utils.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/header/layout.php");
+block_if_connected();
 layout("Forgot password");
 ?>
 <head>

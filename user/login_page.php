@@ -1,8 +1,8 @@
 <?PHP 
-require_once($_SERVER['DOCUMENT_ROOT']."/php/login_utils.php");
-block_if_connected();
+require("php/login_utils.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/header/layout.php");
 layout("login");
+block_if_connected();
 ?>
 
 		<link rel="stylesheet" type="text/css" href="../css/login.css">

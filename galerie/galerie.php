@@ -1,6 +1,7 @@
 <?php
 #block if unconnect
 require_once($_SERVER['DOCUMENT_ROOT'].'/header/layout.php');
+block_if_not_connected();
 layout("my atelier photo");
 ?>
 

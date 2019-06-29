@@ -1,8 +1,7 @@
 <?php
 #block unconnect and not good user
-#block_if_not_connected();
-
 require_once($_SERVER['DOCUMENT_ROOT'].'/galerie/php/utils_photo.php');
+block_if_not_connected();
 $src = $_POST['src'];
 echo $_POST['src'];
 if ($src === NULL || $src === "")

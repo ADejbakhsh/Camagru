@@ -1,7 +1,7 @@
 <?PHP
 require_once($_SERVER["DOCUMENT_ROOT"] . "/src/utils.php");
-require(path("/config/db_utils.php"));
-
+require_once(path("/config/db_utils.php"));
+block_if_connected();
 
 # error handling for register
 function error_register($login, $email, $pass, $pass_bis)
@@ -137,7 +137,6 @@ function update_email($email, $login)
   $statement =  $DB_connect->prepare("UPDATE db.user set email = :email WHERE login = :login");
   $statement->execute(['email' => $email, 'login' => $login]);
 }
-
 
 # 
 

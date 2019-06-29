@@ -1,6 +1,5 @@
 <?php
-require_once($_SERVER["DOCUMENT_ROOT"] . "/src/utils.php");
-block_all();
+#block_all(); -> a mettre en dehors du serveur web
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 require 'database.php';

@@ -1,5 +1,5 @@
 <?PHP 
-require ("php/login_utils.php");
+require("php/login_utils.php");
 block_if_connected();
 require_once($_SERVER['DOCUMENT_ROOT']."/header/layout.php");
 layout("Register"); 
@@ -8,9 +8,7 @@ layout("Register");
 		<div class="grid-container">
   			<div class="login">
     			<form method="post" action="./register_page.php">
-    <?PHP
-    register_form();
-    ?>
+   				    <?PHP register_form(); ?>
         			<h1 style="text-align: center;">Register</h1>
         			<p>Login :</p>
        				<input type="text" name="login" placeholder="Cool name here" class="input" required>

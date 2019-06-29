@@ -23,23 +23,6 @@ function del_pic_of_user($pic_name)
 
 }
 
-#fetch user id
-function fetch_user_id()
-{  
-    global $DB_connect;
-
-    if(isset($_SESSION['login']) && $_SESSION['login'] != NULL)
-    {
-        $statement =  $DB_connect->prepare("SELECT id FROM db.user WHERE login = :login");
-        $statement->execute(['login'=> $_SESSION['login']]);
-        return ($statement->fetch()['0']);
-    }
-    else
-        return (false);
-}
-
-
-
 
 
 

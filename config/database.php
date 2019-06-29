@@ -1,6 +1,9 @@
 <?php
-require_once($_SERVER["DOCUMENT_ROOT"] . "/src/utils.php");
-block_all();
+
+if (isset($_SESSION) && $_SESSION !== NULL)
+  require_once($_SERVER["DOCUMENT_ROOT"] . "/src/utils.php");
+else
+  require_once('src/utils.php');
 
 $DB_dsn = 'mysql:host=localhost:3306';
 $DB_user = 'root';
