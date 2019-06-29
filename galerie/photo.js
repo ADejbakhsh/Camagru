@@ -17,11 +17,66 @@
 		};
 		req.send(string);
 	}
+
+	function display_like() {
+		let like =  document.querySelector('#like');
+		like.innerHTML = "";
+		like.innerHTML = '<img src="/assets/like.png"/>';
+		document.querySelector('#like img').addEventListener('click', toggle_like);
+	}
+
+	function display_unlike() {
+		let like =  document.querySelector('#like');
+		like.innerHTML = "";
+		like.innerHTML = '<img src="/assets/unlike.png"/>';
+		document.querySelector('#like img').addEventListener('click', toggle_like);
+	}
+
+	function toggle_like() {
+		const req = new XMLHttpRequest();
+		req.open('POST', '/galerie/php/like.php', true);
+		req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		let string = "img=" + get_img();
+		req.onreadystatechange = function(event) {
+			if (this.readyState === XMLHttpRequest.DONE) {
+				if (this.status === 200 && !this.response.match(/error/)) {
+					if (!!this.response.match(/true/))
+						display_like();
+					else
+						display_unlike();
+				} 
+			}
+		};
+		req.send(string);
+	}
+
+	function is_liked() {
+		const req = new XMLHttpRequest();
+		req.open('GET', '/galerie/php/like.php?src=' + get_img(), true);
+		req.onreadystatechange = function(event) {
+			if (this.readyState === XMLHttpRequest.DONE) {
+				if (this.status === 200 && !this.response.match(/error/)) {
+					if (!!this.response.match(/true/))
+						display_like();
+					else
+						display_unlike();
+				} 
+			}
+		};
+		req.send();
+	}
+
+	function get_img() {
+		const img = document.querySelector('img#big');
+		src = img.src.match(/img.*$/);
+		return (src[0]);
+	}
+
 	function display_commentary(value) {
 		const div = document.createElement('div');
 		const commentary = document.querySelector('#commentary');
-		div.innerHTML = "<span>"+ value.user +" dit: </span>"
-		div.innerHTML += "<p>" + value.body +"</p>";
+		div.innerHTML = "<span>"+ value.user +" dit: </span>";
+			div.innerHTML += "<p>" + value.body +"</p>";
 		commentary.append(div);
 	}
 
@@ -39,6 +94,7 @@
 		};
 		req.send(string);
 	}
+
 	function display_error() {
 		let div = document.querySelector('div#new_commentary');
 		div.style.backgroundColor = 'red';
@@ -71,7 +127,7 @@
 
 
 	function add_commentary() {
-		const img = document.querySelector('img');
+		const img = document.querySelector('img#big');
 		let src;
 		let input  = check_input();
 		if (img && img.src !== "")
@@ -83,20 +139,24 @@
 	function create_input() {
 		const new_commentary = document.createElement('div');
 		new_commentary.id = 'new_commentary';
-		new_commentary.innerHTML = "<input type='text' placeholder='nouveau commentaire'/><button>ajouter</button>"
-			new_commentary.querySelector('button').addEventListener('click', add_commentary);
+		new_commentary.innerHTML = "<input type='text' placeholder='nouveau commentaire'/><button>ajouter</button>";
+		new_commentary.querySelector('button').addEventListener('click', add_commentary);
 		return new_commentary;
 	}
 
 	function start_up() {
 		const div = document.createElement('div');
-		const img = document.querySelector('img');
+		const img = document.querySelector('img#big');
 		const new_commentary = create_input();
 		div.id = 'commentary';
 		document.querySelector('#main').append(div);
 		document.querySelector('#main').append(new_commentary);
 		if (img && img.src !== "")
 			load_commentary(img.src.match(/img.*$/));
+		if (is_liked())
+			display_like();
+		else
+			display_unlike();
 	}
 	window.addEventListener('load', start_up);
 })();
