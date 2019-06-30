@@ -2,7 +2,7 @@
 require_once($_SERVER['DOCUMENT_ROOT'].'/galerie/php/utils_photo.php');
 
 if (check_if_connected())
-if (!(valid_request('post') && $_POST['img'] !== NULL && photo_exist($_POST['img']) && valid_photo($_POST['img'])))
+if (!(valid_request('post') && $_POST['img'] !== NULL && photo_exist($_POST['img']) && valid_photo(path("/galerie/photo/").$_POST['img'])))
 {
 	echo json_encode("error");
 	exit;
