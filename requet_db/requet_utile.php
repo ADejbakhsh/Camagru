@@ -92,6 +92,14 @@ function add_comment($img_name, $body)
     $tmp = $statement->fetch()['0'];
     $statement =  $DB_connect->prepare("INSERT INTO db.commentary (img_id, body, user_id) VALUES ( $tmp ,:body , :user_id)");
     $statement->execute(['body' => $body , 'user_id' => $_SESSION['user_id']]);
+
+    #send a mail to the posssor of img
+    $statement =  $DB_connect->prepare("SELECT user.email 
+        FROM db.img
+        INNER JOIN db.user ON img.user_id = user.id 
+        WHERE img.name = :img_name AND want_mail = :yes;");
+    $statement->execute(['img_name' => $img_name, 'yes' => 'yes']);
+    mail($statement->fetch()['0'], "someone commented your img on CAMAGRU", "go check it out");
 }
 
 function fetch_all_comment_of_image($imag_name)

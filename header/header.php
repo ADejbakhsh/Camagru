@@ -24,7 +24,7 @@ function header_custom($title) {
 	{
 		echo "<a href=\"/user/profile.php\" title=\"Profile\" >Profile</a>";
 		echo "<a href=\"/galerie/galerie.php\" title=\"Photo\" >Photo</a>";
-		echo  "<a href=\"./user/Deconexion.php\" title=\"Deconexion\" >Deconexion</a>";
+		echo  "<a href=\"/user/Deconexion.php\" title=\"Deconexion\" >Deconexion</a>";
 	}
 	echo " </div>";
 	echo "</div>";
