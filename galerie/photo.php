@@ -6,8 +6,10 @@ if (!(photo_exist($_GET['img']) && valid_photo($_GET['img'])))
 
 layout('photo');
 echo "<div id='main'><img id='big' src='/galerie/photo/".$_GET['img']."'><div id='like'></div></div>";
-echo var_dump($_SERVER);
 ?>
+
+<link rel="stylesheet" type="text/css" href="/css/photo.css">
+<div style="height: 80px"></div>
 
 			<script src="/galerie/photo.js"></script>
 	</body>

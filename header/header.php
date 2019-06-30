@@ -17,13 +17,14 @@ function header_custom($title) {
 	echo "<a class='active' href='/index.php' title='Home' >Home</a>";
 	if (!isset($_SESSION['login']))
 	{
-		echo "<a href=\"../../../user/login_page.php\" title=\"Login\" >Login</a>";
+		echo "<a href=\"/user/login_page.php\" title=\"Login\" >Login</a>";
 		echo  "<a href='/user/register_page.php' title='Register' >Register</a>";
 	}
 	else
 	{
 		echo "<a href=\"/user/profile.php\" title=\"Profile\" >Profile</a>";
-		echo  "<a href=\"../../../user/Deconexion.php\" title=\"Deconexion\" >Deconexion</a>";
+		echo "<a href=\"/galerie/galerie.php\" title=\"Photo\" >Photo</a>";
+		echo  "<a href=\"./user/Deconexion.php\" title=\"Deconexion\" >Deconexion</a>";
 	}
 	echo " </div>";
 	echo "</div>";
