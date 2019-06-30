@@ -10,8 +10,8 @@ layout("Forgot password");
     <div class="grid-container">
         <div class="login">
             <?PHP
-            reset_password_if_all_good("token", $_GET['token']);
-            clear_token($_GET['token']);
+            if (reset_password_if_all_good("token", $_GET['token']))
+                clear_token($_GET['token']);
             echo  '<form method="post" action="/user/password_reset.php?token='.$_GET['token'].'">' ?>
                     <p>New Password :</p>
                     <input type="password" name="pass" placeholder="Tough password" class="input" required>

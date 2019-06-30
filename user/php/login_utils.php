@@ -197,10 +197,12 @@ function reset_password_if_all_good($collum, $data)
           echo "<li>" . $tmp . "</li>";
         }
         echo "</ul>";
+        return (false);
       } else {
         update_password($_POST['pass'], $collum, $data);
 
         echo "<h2>password changed</h2>";
+        return(true);
       }
     }
 }
