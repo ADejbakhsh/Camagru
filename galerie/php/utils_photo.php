@@ -33,9 +33,12 @@ function photo_exist($img) {
 }
 
 function valid_photo($img) {
-	$type = mime_content_type(path("/galerie/photo/$img"));
-	if (preg_match('/(jpeg|png|jpg)/', $type, $match))
-		return true;
+	$type = mime_content_type($img);
+	$bytes = filesize($img);
+	$factor = floor((strlen($bytes) - 1) / 3);
+	$human_size = $bytes / (8 * 1000);
+	if ( $human_size <= 1000 && preg_match('/(jpeg|png|jpg)/', $type, $match))
+		return true; 
 	else
 		return false;
 }

@@ -13,7 +13,7 @@ echo "error";
 $file = path("/".get_good_path($file));
 $filtre = path("/".get_good_path($filtre));
 
-if (!file_exists($file) || !file_exists($filtre))
+if (!(file_exists($file) && valid_photo($file)  && file_exists($filtre)))
 {
 	echo "error";	
 	exit;

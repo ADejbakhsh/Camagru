@@ -18,5 +18,11 @@ if (preg_match('/^data:image\/(\w+);base64,/', $file, $type)) {
 }
 $name = find_the_right_name(path("/galerie/tmp")).".{$type}";
 file_put_contents(path('/galerie/tmp/').$name, $file);
-echo $name
+if (valid_photo(path('/galerie/tmp/').$name))
+	echo $name;
+else
+{
+	unlink(path('/galerie/tmp/').$name);
+	echo "error";
+}
 ?>

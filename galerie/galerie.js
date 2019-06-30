@@ -24,6 +24,7 @@
 			.then(function(stream) {
 				video.srcObject = stream;
 				video.play();
+				video.classList.add('play');
 			})
 		.catch(function(err) {
 			console.log("An error occurred: " + err);
@@ -49,7 +50,7 @@
 		clearphoto();
 	}
 
-	 function getBase64(file) {
+	function getBase64(file) {
 		return new Promise((resolve, reject) => {
 			const reader = new FileReader();
 			reader.readAsDataURL(file);
@@ -133,6 +134,22 @@
 		img.src = '/galerie/tmp/' + response;
 	}
 
+	function clean_board() {
+		let img = document.querySelector('#uploaded');
+		img.parentNode.removeChild(img);
+		let filter = document.querySelector('#active_filter').src= "";
+		let button = document.querySelector('div#upload + button');
+		button.parentNode.removeChild(button);
+	}
+
+	function there_is_img() {
+		let img = document.querySelector('img#uploaded');
+		let video = document.querySelector('video');
+		if (!!img || (!!video && video.classList.contains('play')))
+			return true;
+		return false;
+	}
+
 	function mount_them() {
 		const filter = document.querySelector('#active_filter');
 		const uploaded = document.querySelector('#uploaded');
@@ -145,6 +162,7 @@
 			if (this.readyState === XMLHttpRequest.DONE) {
 				if (this.status === 200  && !this.response.match(/error/)) {
 					add_photo(null, this.response);
+					clean_board();
 				} 
 			}
 		};
@@ -152,7 +170,7 @@
 		if (!check_if_there_is_filter())
 			return ;
 		string = 'filter=' + filter.src + '&tmp=' + uploaded.src
-		req.send(string);
+			req.send(string);
 	}
 
 	function upload_photo() {
@@ -164,7 +182,7 @@
 		req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		req.onreadystatechange = function(event) {
 			if (this.readyState === XMLHttpRequest.DONE) {
-				if (this.status === 200) {
+				if (this.status === 200 && !this.response.match(/error/)) {
 					display_photo_uploaded(this.response);
 				} 
 			}
@@ -173,7 +191,7 @@
 			.then((data) => {
 				req.send('file=' +  normalize_data(data));
 			})
-			.catch(error => console.error(error));
+		.catch(error => console.error(error));
 	}
 
 	function send_photo_to_server(data) {
@@ -185,7 +203,7 @@
 		req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		req.onreadystatechange = function(event) {
 			if (this.readyState === XMLHttpRequest.DONE) {
-				if (this.status === 200) {
+				if (this.status === 200 && !this.response.match(/error/)) {
 					add_photo(null, this.response);
 				} 
 			}
@@ -240,6 +258,8 @@
 	}
 
 	function change_filter() {
+		if (!there_is_img())
+			return ;
 		const filter = document.querySelector('#active_filter');
 		let ref = document.getElementById('video');
 		if (!ref)
@@ -301,7 +321,7 @@
 	}
 
 	function normalize_data(data) {
-			return (data.replace(/\+/g, '%2B'));
+		return (data.replace(/\+/g, '%2B'));
 	}
 
 	function takepicture() {
