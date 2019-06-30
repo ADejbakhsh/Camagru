@@ -1,7 +1,6 @@
 <?PHP
 require_once($_SERVER["DOCUMENT_ROOT"] . "/src/utils.php");
-require(path("/config/db_utils.php"));
-
+require_once(path("/config/db_utils.php"));
 
 # error handling for register
 function error_register($login, $email, $pass, $pass_bis)
@@ -46,19 +45,6 @@ function user_connect($login, $pass)
     return (false);
 }
 
-# check if user is connected and redirect him to index.php if so
-function check_if_connected_and_redirect()
-{
-  if (isset($_SESSION['login']) && $_SESSION['login'] != NULL)
-    header('Location: /index.php');
-}
-
-# reverse result of the previous function
-function check_if_not_connected_and_redirect()
-{
-  if (!isset($_SESSION['login']) || $_SESSION['login'] == NULL)
-    header('Location: /index.php');
-}
 
 # clear the token row
 function clear_token($token)
@@ -134,23 +120,23 @@ function update_password($new_pass, $pivot, $data_from_pivot)
 }
 
 #update login from old login variable
-function update_login($new_login, $login)
+function update_login($new_login, $user_id)
 {
   global $DB_connect;
 
-  $statement =  $DB_connect->prepare("UPDATE db.user set login = :new_login WHERE login = :login");
-  $statement->execute(['new_login' => $new_login, 'login' => $login]);
+  $statement =  $DB_connect->prepare("UPDATE db.user set login = :new_login WHERE id = :user_id");
+  $statement->execute(['new_login' => $new_login, 'user_id' => $user_id]);
+  $_SESSION['login'] = $new_login;
 }
 
 #update email from login variable
-function update_email($email, $login)
+function update_email($email, $user_id)
 {
   global $DB_connect;
 
-  $statement =  $DB_connect->prepare("UPDATE db.user set email = :email WHERE login = :login");
-  $statement->execute(['email' => $email, 'login' => $login]);
+  $statement =  $DB_connect->prepare("UPDATE db.user set email = :email WHERE id = :user_id");
+  $statement->execute(['email' => $email, 'user_id' => $user_id]);
 }
-
 
 # 
 
@@ -169,7 +155,7 @@ function reset_email_if_all_good()
        echo "</ul>";
      } 
      else {
-       update_email($_POST['email'], $_SESSION['login']);
+       update_email($_POST['email'], $_SESSION['user_id']);
        echo "<h2>This is your new email ".$_POST['email']."</h2>";
       }
     }
@@ -191,14 +177,14 @@ function reset_login_if_all_good()
         echo "</ul>";
       } 
       else {
-        update_login($_POST['login'], $_SESSION['login']);
+        update_login($_POST['login'], $_SESSION['user_id']);
         echo "<h2>Welcome ".$_POST['login']."</h2>";
       }
     }
 }
 
 #
-function reset_password_if_all_good()
+function reset_password_if_all_good($collum, $data)
 {
   if (isset($_POST['submit']) && $_POST['submit'] === "Reset")
     if (isset($_POST['pass']) && isset($_POST['pass_bis'])) {
@@ -210,9 +196,9 @@ function reset_password_if_all_good()
         }
         echo "</ul>";
       } else {
-        update_password($_POST['pass'], "token", $_GET['token']);
-        clear_token($_GET['token']);
-        echo "<h2>You can now login</h2>";
+        update_password($_POST['pass'], $collum, $data);
+
+        echo "<h2>password changed</h2>";
       }
     }
 }

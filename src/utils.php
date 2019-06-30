@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 
 function path($str) {
@@ -18,4 +19,37 @@ function valid_input($input) {
 	else
 		return true;
 }
+
+function block_all()
+{
+	if ($_SERVER !== NULL)
+		exit;
+}
+
+function block_if_connected()
+{
+	if (check_if_connected())
+	{
+		header('Location: /index.php');
+		exit;
+	}
+}
+
+function block_if_not_connected()
+{
+	if (!check_if_connected())
+	{
+		header('Location: /index.php');
+		exit;
+	}
+}
+
+function check_if_connected()
+{  
+	if (isset($_SESSION['login']) && $_SESSION['login'] != NULL)
+		return(true);
+	return(false);
+}
+
+
 ?>

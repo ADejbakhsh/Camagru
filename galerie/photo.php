@@ -5,7 +5,7 @@ if (!(photo_exist($_GET['img']) && valid_photo($_GET['img'])))
 	header("Location: /");
 
 layout('photo');
-echo "<div id='main'><img src='/galerie/photo/".$_GET['img']."'></div>";
+echo "<div id='main'><img id='big' src='/galerie/photo/".$_GET['img']."'><div id='like'></div></div>";
 echo var_dump($_SERVER);
 ?>
 

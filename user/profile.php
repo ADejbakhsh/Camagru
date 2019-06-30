@@ -1,17 +1,10 @@
 <?PHP
-require("php/login_utils.php");
-check_if_not_connected_and_redirect();
+require_once($_SERVER['DOCUMENT_ROOT']."/user/php/login_utils.php");
+block_if_not_connected();
 require_once($_SERVER['DOCUMENT_ROOT'] . "/header/layout.php");
 layout("login");
-
-
-
 ?>
-
-<head>
     <link rel="stylesheet" type="text/css" href="/css/login.css">
-</head>
-<body>
     <div class="grid-container">
         <div class="login">
             <?PHP
@@ -38,7 +31,7 @@ layout("login");
             </div>
             <div class="login">
                 <?PHP
-                 reset_password_if_all_good();
+                 reset_password_if_all_good("id", $_SESSION['user_id']);
                 ?>
             <form method="post" action="/user/profile.php">
                 <p>New password :</p>
