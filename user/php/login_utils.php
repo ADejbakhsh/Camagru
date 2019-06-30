@@ -126,6 +126,7 @@ function update_login($new_login, $user_id)
 
   $statement =  $DB_connect->prepare("UPDATE db.user set login = :new_login WHERE id = :user_id");
   $statement->execute(['new_login' => $new_login, 'user_id' => $user_id]);
+  $_SESSION['login'] = $new_login;
 }
 
 #update email from login variable

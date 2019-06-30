@@ -1,6 +1,6 @@
 <?php
-#block unconnect
 require_once($_SERVER['DOCUMENT_ROOT'].'/galerie/php/utils_photo.php');
+block_if_not_connected();
 $data = $_POST['data'];
 $filtre = $_POST['filter'];
 
@@ -24,6 +24,6 @@ if ($filtre !== NULL && file_exists(path("/".get_good_path($filtre))))
 {
 	super_impose(path("/galerie/photo/").$name, path("/".get_good_path($filtre)));
 }
-
+add_pic_to_user($name);
 echo $name;
 ?>

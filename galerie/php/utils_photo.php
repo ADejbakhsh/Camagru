@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once($_SERVER["DOCUMENT_ROOT"]."/src/utils.php");
-require_once(path("/config/db_utils.php"));
+require_once(path("/requet_db/requet_utile.php"));
 $dir_filter = path('/galerie/filter');
 
 function find_the_right_name($path) {
@@ -9,8 +9,13 @@ function find_the_right_name($path) {
 		mkdir($path, 0755);
 	$data = get_all_photo($path);
 	$data = array_reverse($data);
-	preg_match('/\d+/', $data[0], $match);
-	return "img".strval(intval($match[0]) + 1);
+	if (isset($data[0]) && $data[0] !== NULL)
+	{
+		preg_match('/\d+/', $data[0], $match);
+		return "img".strval(intval($match[0]) + 1);
+	}
+	else
+		return "img0";
 }
 
 function get_all_photo($path) {
@@ -36,15 +41,16 @@ function valid_photo($img) {
 }
 
 function get_scroll_photo($nb) {
-	return (get_all_photo(path("/galerie/photo"))[0]);
+	$array  = fetch_all_pic($nb);
+	return $array;	
 }
 
 function get_all_com($name_img) {
-	return [];
+	return (fetch_all_comment_of_image($name_img));
 }
 
-function put_comment($img, $input) {
-	return array("user" => "george", "body" => $input);
+function put_comment($user, $input) {
+	return array("user" => $user, "body" => $input);
 }
 
 function get_filters() {
@@ -89,21 +95,7 @@ function super_impose($src, $filter)
 
 function get_image_name($url)
 {
-	return (preg_match("/photo\/\K.*/", $url));
-}
-
-
-# return bool if the img belong to the user
-function img_belong_to_user($img)
-{
-	$img = get_image_name($img);
-
-	global $DB_connect;
-
-	$statement = $DB_connect->prepare("SELECT user_id FROM db.img WHERE name = :img");
-	$statement->execute(['img' => $img]);
-	if ($statement->fetch()['0'] == $_SESSION['user_id'])
-		return(true);
-	return(false);
+	preg_match("/photo\/\K.*/", $url, $match);
+	return ($match[0]);
 }
 ?>
