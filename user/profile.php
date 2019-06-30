@@ -43,6 +43,17 @@ layout("login");
                 <br>
                 <input class="button" type="submit" name="submit" value="Reset">
             </form>
+            <div class="login">
+                <?PHP
+                does_user_want_mail();
+                ?>
+            <form method="post" action="/user/profile.php">
+                <p>write "yes" or "no" if you want email or none, when someone comment your pic</p>
+                <input type="text" name="bool" placeholder="yes" class="input" required>
+                <br>
+                <br>
+                <input class="button" type="submit" name="submit" value="Send">
+            </form>
             </div>
         </div>
     </div>

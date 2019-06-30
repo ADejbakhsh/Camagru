@@ -109,9 +109,7 @@ a.filter:active img {
 	.video {
 		grid-area: 1 / 1 / 10 / 2!important;  
 	}
-	.filter img{
-		background-size: content;
-	}
+
 	#main #filter {
 		grid-area: 10 / 1 / 12 / 2!important;
 		overflow-y: hidden;

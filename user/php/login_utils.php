@@ -80,6 +80,8 @@ function error_password($pass, $pass_bis)
     array_push($error, "error password must be longer than 8 and shorter than 255 ");
   if ($pass !== $pass_bis)
     array_push($error, "password do not match");
+   if (!preg_match("/.*[0-9].*/", $pass))
+    array_push($error, "password must have at least a number in it");
   return ($error);
 }
 
@@ -220,4 +222,19 @@ function register_form()
     }
   }
 }
+
+#
+function does_user_want_mail(){
+   global $DB_connect;
+  if (isset($_POST['submit']) && $_POST['submit'] === "Send" && isset($_POST['bool'])) {
+    $txt = $_POST['bool'];
+   if(!preg_match('/^(yes|no)$/', $txt))
+   {
+      echo "<li>invalide input</li>";
+      return;
+    }
+    $statement = $DB_connect->prepare("UPDATE db.user SET want_mail = :txt WHERE id = :user_id");
+    $statement->execute(['txt' => $txt,'user_id' => $_SESSION['user_id']]);
+  }
+  };
 ?>
