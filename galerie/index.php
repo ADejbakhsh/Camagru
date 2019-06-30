@@ -1,6 +1,6 @@
 <?php
 require_once('../header/layout.php');
-layout("La gallerie");
+layout("Camagru");
 ?>
  <link rel="stylesheet" type="text/css" href="/css/galerie.css" />
 
