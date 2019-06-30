@@ -169,8 +169,8 @@
 
 		if (!check_if_there_is_filter())
 			return ;
-		string = 'filter=' + filter.src + '&tmp=' + uploaded.src
-			req.send(string);
+		string = 'filter=' + filter.src + '&tmp=' + uploaded.src;
+		req.send(string);
 	}
 
 	function upload_photo() {
