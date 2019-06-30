@@ -50,6 +50,7 @@
 					else {
 						display_photo(JSON.parse(responseText));
 						window.scroll(0, tmp);
+						lazyload();
 					}
 				});
 			}
